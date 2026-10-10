@@ -72,10 +72,14 @@
 <div class="page" id="p-work">
   <h2>每日练习</h2>
   <div class="card">
-    <div style="font-size:14px;font-weight:700;margin-bottom:8px;">今天学了哪个知识点?</div>
+    <div style="font-size:14px;font-weight:700;margin-bottom:10px;">选练习方式:</div>
+    <div style="display:flex;gap:18px;margin-bottom:12px;font-size:14px;flex-wrap:wrap;">
+      <label style="display:flex;align-items:center;gap:6px;cursor:pointer;"><input type="radio" name="mode" value="unit" checked> <b>每日一练</b>(整单元 20 题)</label>
+      <label style="display:flex;align-items:center;gap:6px;cursor:pointer;"><input type="radio" name="mode" value="point"> 知识点专项(6 题)</label>
+    </div>
     <select id="sel-unit" style="width:100%;padding:9px;border:1px solid #d8e0ea;border-radius:8px;font-size:14px;margin-bottom:8px;"></select>
-    <select id="sel-point" style="width:100%;padding:9px;border:1px solid #d8e0ea;border-radius:8px;font-size:14px;margin-bottom:12px;"></select>
-    <button class="btn" onclick="startWork()">开始练习(6题)</button>
+    <select id="sel-point" style="width:100%;padding:9px;border:1px solid #d8e0ea;border-radius:8px;font-size:14px;margin-bottom:12px;display:none;"></select>
+    <button class="btn" onclick="startWork()">开始练习</button>
   </div>
   <div id="work-area"></div>
 </div>
@@ -143,20 +147,60 @@ function fillPoints(){
 }
 document.getElementById('sel-unit').addEventListener('change', fillPoints);
 
-function selPoint(pid){ curPid = pid; }
+function selPoint(pid){
+  // 知识点地图点击:切到专项模式并选中该知识点
+  document.querySelectorAll('input[name="mode"]').forEach(function(r){ r.checked = (r.value==='point'); });
+  var un = unitName(pid);
+  if(un) document.getElementById('sel-unit').value = un;
+  fillPoints();
+  document.getElementById('sel-point').value = pid;
+  document.getElementById('sel-point').style.display = '';
+}
+
+function modeChanged(){
+  var mode = document.querySelector('input[name="mode"]:checked').value;
+  document.getElementById('sel-point').style.display = (mode==='point') ? '' : 'none';
+}
+document.querySelectorAll('input[name="mode"]').forEach(function(r){ r.onchange = modeChanged; });
 
 function startWork(){
-  var pid = document.getElementById('sel-point').value;
-  var qs = BANK[pid] || [];
-  if(!qs.length){ alert('这个知识点的题还没录入,换一个试试'); return; }
-  curPid = pid; curQs = qs.slice(0,6); answers = {};
+  var mode = document.querySelector('input[name="mode"]:checked').value;
+  if(mode === 'unit'){
+    // 单元20题:该单元所有知识点轮询抽题(均匀覆盖)
+    var un = document.getElementById('sel-unit').value;
+    var groups = {};
+    UNITS.forEach(function(u){ if(u.name===un){ u.points.forEach(function(p){ (BANK[p.id]||[]).forEach(function(q){ (groups[p.id]=groups[p.id]||[]).push(q); }); }); } });
+    var pids = Object.keys(groups);
+    if(!pids.length){ alert('这个单元的题还没录入'); return; }
+    var picked = [], ri = 0;
+    while(picked.length < 20){
+      var added = false;
+      pids.forEach(function(pid){
+        if(picked.length >= 20) return;
+        if(ri < groups[pid].length){ picked.push({pid: pid, q: groups[pid][ri]}); added = true; }
+      });
+      if(!added) break;
+      ri++;
+    }
+    curPid = '__unit__';
+    curQs = picked;
+  } else {
+    var pid = document.getElementById('sel-point').value;
+    var qs = BANK[pid] || [];
+    if(!qs.length){ alert('这个知识点的题还没录入,换一个试试'); return; }
+    curPid = pid;
+    curQs = qs.slice(0,6).map(function(q){ return {pid: pid, q: q}; });
+  }
+  answers = {};
   renderWork();
 }
 
 function renderWork(){
   var el = document.getElementById('work-area');
-  el.innerHTML = '<div class="card"><div style="font-size:14px;font-weight:700;margin-bottom:4px;">'+pname(curPid)+'</div><div style="font-size:12px;color:#8a94a6;margin-bottom:10px;">共 '+curQs.length+' 题,做完点"交卷判分"</div></div>';
-  curQs.forEach(function(q, i){
+  var title = (curPid==='__unit__') ? (document.getElementById('sel-unit').value + ' · 每日一练') : pname(curPid);
+  el.innerHTML = '<div class="card"><div style="font-size:14px;font-weight:700;margin-bottom:4px;">'+title+'</div><div style="font-size:12px;color:#8a94a6;margin-bottom:10px;">共 '+curQs.length+' 题,做完点"交卷判分"</div></div>';
+  curQs.forEach(function(item, i){
+    var q = item.q;
     var d = document.createElement('div'); d.className='card q';
     var tag = q.type==='choice' ? '选择题' : q.type==='blank' ? '填空题' : '计算/应用题';
     var html = '<div class="stem"><span class="tag">'+tag+'</span>'+escapeHtml(q.stem)+'</div>';
@@ -189,28 +233,35 @@ function normalize(s){
 function submitAll(){
   if(!curQs) return;
   var right = 0;
-  curQs.forEach(function(q, i){
+  var pidStat = {};
+  curQs.forEach(function(item, i){
+    var q = item.q, pid = item.pid;
     var mine = q.type==='choice' ? (answers[i]||'') : (document.getElementById('ans-'+i)||{value:''}).value;
     var ok = normalize(mine) === normalize(q.answer);
     if(ok) right++;
+    if(!pidStat[pid]) pidStat[pid] = {right:0, total:0};
+    pidStat[pid].total++;
+    if(ok) pidStat[pid].right++;
     var jd = document.getElementById('judge-'+i);
     if(ok){
       jd.innerHTML = '<div class="judge right">✓ 正确!</div>';
     } else {
       jd.innerHTML = '<div class="judge wrong">✗ 答错了。正确答案: '+escapeHtml(q.answer)+'</div>';
-      DB.wrong.push({pid:curPid, pname:pname(curPid), stem:q.stem, type:q.type, options:q.options||[], myAns:mine, rightAns:q.answer, explain:q.explain||'', time:new Date().toISOString().slice(0,10)});
+      DB.wrong.push({pid:pid, pname:pname(pid), stem:q.stem, type:q.type, options:q.options||[], myAns:mine, rightAns:q.answer, explain:q.explain||'', time:new Date().toISOString().slice(0,10)});
     }
     if(q.explain) jd.innerHTML += '<div class="explain">解析: '+escapeHtml(q.explain)+'</div>';
   });
-  // 记录
-  var rec = DB.done.find(function(x){return x.pid===curPid;});
-  if(!rec){ rec = {pid:curPid, right:0, total:0}; DB.done.push(rec); }
-  rec.right += right; rec.total += curQs.length;
+  // 按知识点分别累计掌握度
+  Object.keys(pidStat).forEach(function(pid){
+    var rec = DB.done.find(function(x){return x.pid===pid;});
+    if(!rec){ rec = {pid:pid, right:0, total:0}; DB.done.push(rec); }
+    rec.right += pidStat[pid].right; rec.total += pidStat[pid].total;
+  });
   save();
   var box = document.createElement('div');
   box.className = 'card';
   box.style.marginTop = '12px';
-  box.innerHTML = '<div style="font-size:16px;font-weight:800;">本次得分: '+right+' / '+curQs.length+'</div><div style="font-size:13px;color:#8a94a6;margin-top:4px;">错题已自动收进错题本,该知识点累计掌握度已更新。</div>';
+  box.innerHTML = '<div style="font-size:16px;font-weight:800;">本次得分: '+right+' / '+curQs.length+'</div><div style="font-size:13px;color:#8a94a6;margin-top:4px;">错题已自动收进错题本,各知识点掌握度已更新。</div>';
   document.getElementById('work-area').appendChild(box);
   window.scrollTo(0, document.body.scrollHeight);
 }
