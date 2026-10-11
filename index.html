@@ -45,12 +45,39 @@
   .lv.good{background:#e8f7ee;color:#15803d;} .lv.mid{background:#fff7e0;color:#b45309;} .lv.bad{background:#fdecea;color:#c0392b;}
   .empty{color:#8a94a6;text-align:center;padding:26px;font-size:13px;}
   .warn{background:#fff7e0;border:1px solid #f0d9a8;border-radius:8px;padding:11px;font-size:12.5px;color:#8a6d1a;line-height:1.7;}
+  /* ===== 激活层 ===== */
+  .wm{position:fixed;top:8px;right:10px;z-index:99;font-size:11px;padding:4px 11px;border-radius:12px;background:rgba(37,99,235,.12);color:#2563eb;font-weight:700;pointer-events:none;}
+  .wm.trial{background:rgba(107,114,128,.14);color:#6b7280;}
+  #lic-mask{position:fixed;inset:0;background:rgba(15,23,42,.55);z-index:100;display:flex;align-items:center;justify-content:center;padding:20px;}
+  #lic-box{background:#fff;border-radius:16px;max-width:400px;width:100%;padding:26px 24px;box-shadow:0 18px 50px rgba(0,0,0,.3);}
+  #lic-box h3{font-size:18px;margin-bottom:6px;}
+  #lic-box .hint{font-size:12.5px;color:#8a94a6;line-height:1.7;margin-bottom:14px;}
+  #lic-box input{width:100%;padding:12px;border:1px solid #d8e0ea;border-radius:9px;font-size:15px;letter-spacing:1px;margin-bottom:12px;text-align:center;}
+  #lic-box .err{color:#c0392b;font-size:12.5px;min-height:18px;margin-bottom:8px;}
+  #lic-box .row{display:flex;gap:9px;}
+  #lic-box .row .btn{flex:1;}
+  .lic-foot{font-size:11.5px;color:#9aa3b2;text-align:center;margin-top:14px;line-height:1.7;}
 </style>
 </head>
 <body>
 
 <h1>六年级数学 · 精准练习</h1>
 <div class="sub">人教版六年级上 · 知识点→练习→错题→弱项,一个闭环</div>
+<div class="wm trial" id="wm">试用版</div>
+
+<div id="lic-mask" style="display:none;">
+  <div id="lic-box">
+    <h3>激活练习器</h3>
+    <div class="hint">请输入购买时获得的激活码。未激活可点击「先试用」,试用期间练习记录仅保留当天。</div>
+    <input id="lic-input" placeholder="例如:ABCD-EFGH-JKLM" maxlength="20">
+    <div class="err" id="lic-err"></div>
+    <div class="row">
+      <button class="btn" onclick="doActivate()">激 活</button>
+      <button class="btn gray" onclick="tryMode()">先试用</button>
+    </div>
+    <div class="lic-foot">激活码与设备绑定,每码限 3 台设备<br>换设备请联系卖家换绑</div>
+  </div>
+</div>
 
 <nav>
   <a data-p="map" class="on">知识点地图</a>
@@ -97,6 +124,48 @@
 </div>
 
 <script>
+// ===== 激活系统 =====
+// 码表由卖家生成器注入: { "XXXX-XXXX-XXXX": { owner: "买家昵称", devices: 3 } }
+var ACTIVATION = {};
+var LIC_KEY = 'math6_lic';
+function licGet(){ try{ return JSON.parse(localStorage.getItem(LIC_KEY)||'null'); }catch(e){ return null; } }
+function licSet(v){ localStorage.setItem(LIC_KEY, JSON.stringify(v)); }
+function licActive(){
+  var l = licGet();
+  if(!l || !l.code) return null;
+  var entry = ACTIVATION[l.code];
+  if(!entry) return null;
+  return entry;  // {owner, devices}
+}
+function wmShow(txt, trial){
+  var w = document.getElementById('wm');
+  w.textContent = txt;
+  w.className = 'wm' + (trial ? ' trial' : '');
+}
+function initLic(){
+  var entry = licActive();
+  if(entry){ wmShow(entry.owner + ' · 专属版', false); return; }
+  wmShow('试用版', true);
+  document.getElementById('lic-mask').style.display = 'flex';
+}
+function tryMode(){
+  document.getElementById('lic-mask').style.display = 'none';
+  wmShow('试用版', true);
+}
+function doActivate(){
+  var inp = document.getElementById('lic-input');
+  var err = document.getElementById('lic-err');
+  var code = (inp.value||'').trim().toUpperCase().replace(/\s+/g,'');
+  if(!code){ err.textContent = '请输入激活码'; return; }
+  var entry = ACTIVATION[code];
+  if(!entry){ err.textContent = '激活码无效,请核对后重试(注意字母数字)'; return; }
+  var l = licGet() || {};
+  l.code = code; l.ts = Date.now();
+  licSet(l);
+  document.getElementById('lic-mask').style.display = 'none';
+  wmShow(entry.owner + ' · 专属版', false);
+}
+window.addEventListener('DOMContentLoaded', initLic);
 // ===== 知识点结构 =====
 var UNITS = [{"name": "第一单元 分数乘法", "points": [{"id": "f1", "name": "分数乘整数"}, {"id": "f2", "name": "分数乘分数"}, {"id": "f3", "name": "小数乘分数"}, {"id": "f4", "name": "分数混合运算"}, {"id": "f5", "name": "连续求一个数的几分之几"}, {"id": "f6", "name": "求比一个数多(少)几分之几的数"}]}, {"name": "第二单元 位置与方向(二)", "points": [{"id": "p1", "name": "用方向和距离确定位置"}, {"id": "p2", "name": "描述路线图"}]}, {"name": "第三单元 分数除法", "points": [{"id": "d1", "name": "倒数的认识"}, {"id": "d2", "name": "分数除以整数"}, {"id": "d3", "name": "一个数除以分数"}, {"id": "d4", "name": "分数混合运算"}, {"id": "d5", "name": "已知一个数的几分之几求这个数"}, {"id": "d6", "name": "已知比一个数多(少)几分之几求这个数"}, {"id": "d7", "name": "和倍差倍问题(两个未知数)"}]}, {"name": "第四单元 比", "points": [{"id": "b1", "name": "比的意义和读写"}, {"id": "b2", "name": "比的基本性质和化简比"}, {"id": "b3", "name": "按比例分配"}]}, {"name": "第五单元 圆", "points": [{"id": "c1", "name": "圆的认识(圆心半径直径)"}, {"id": "c2", "name": "圆的周长"}, {"id": "c3", "name": "圆的面积"}, {"id": "c4", "name": "圆环的面积"}, {"id": "c5", "name": "扇形"}, {"id": "c6", "name": "外方内圆与外圆内方"}]}, {"name": "第六单元 百分数(一)", "points": [{"id": "pc1", "name": "百分数的意义和读写"}, {"id": "pc2", "name": "百分数与分数小数互化"}, {"id": "pc3", "name": "求一个数是另一个数的百分之几"}, {"id": "pc4", "name": "求一个数比另一个数多(少)百分之几"}, {"id": "pc5", "name": "求比一个数多(少)百分之几的数"}]}, {"name": "第七单元 扇形统计图", "points": [{"id": "s1", "name": "扇形统计图的认识"}, {"id": "s2", "name": "选择合适的统计图"}]}, {"name": "第八单元 数学广角——数与形", "points": [{"id": "n1", "name": "数与形(等差数列求和、正方形数)"}]}];
 
