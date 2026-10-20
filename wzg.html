@@ -102,7 +102,7 @@
     <div style="font-size:14px;font-weight:700;margin-bottom:10px;">选练习方式:</div>
     <div style="display:flex;gap:18px;margin-bottom:12px;font-size:14px;flex-wrap:wrap;">
       <label style="display:flex;align-items:center;gap:6px;cursor:pointer;"><input type="radio" name="mode" value="unit" checked> <b>每日一练</b>(整单元 20 题)</label>
-      <label style="display:flex;align-items:center;gap:6px;cursor:pointer;"><input type="radio" name="mode" value="point"> 知识点专项(6 题)</label>
+      <label style="display:flex;align-items:center;gap:6px;cursor:pointer;"><input type="radio" name="mode" value="point"> 知识点专项(最多20题)</label>
     </div>
     <select id="sel-unit" style="width:100%;padding:9px;border:1px solid #d8e0ea;border-radius:8px;font-size:14px;margin-bottom:8px;"></select>
     <select id="sel-point" style="width:100%;padding:9px;border:1px solid #d8e0ea;border-radius:8px;font-size:14px;margin-bottom:12px;display:none;"></select>
@@ -258,7 +258,7 @@ function startWork(){
     var qs = BANK[pid] || [];
     if(!qs.length){ alert('这个知识点的题还没录入,换一个试试'); return; }
     curPid = pid;
-    curQs = qs.slice(0,6).map(function(q){ return {pid: pid, q: q}; });
+    curQs = qs.slice(0,20).map(function(q){ return {pid: pid, q: q}; });
   }
   answers = {};
   renderWork();
