@@ -109,6 +109,8 @@
     <button class="btn" onclick="startWork()">开始练习</button>
   </div>
   <div id="work-area"></div>
+
+
 </div>
 
 <!-- 错题本 -->
@@ -213,7 +215,7 @@ function showTrialEnd(){
     '<div style="margin-top:6px"><input id="lic-input" placeholder="输入激活码解锁" maxlength="20"></div>' +
     '<div class="err" id="lic-err"></div>' +
     '<div class="row"><button class="btn" onclick="doActivate()">激 活</button></div>' +
-    '<div class="lic-foot">激活后本设备永久可用</div>';
+    '<div class="lic-foot">激活后本设备永久可用<br>客服微信:tantantany(备注:练题器)</div>';
   m.style.display = 'flex';
 }
 function checkTrialGate(){
@@ -529,5 +531,11 @@ function escapeHtml(s){ return String(s||'').replace(/&/g,'&amp;').replace(/</g,
 
 load(); initSelects(); renderMap();
 </script>
+
+<div id="contact-bar" style="max-width:880px;margin:18px auto 40px;padding:14px 16px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:12px;text-align:center;font-size:13px;color:#64748b;line-height:1.9">
+  <div style="font-weight:700;color:#334155;margin-bottom:2px">购买完整版 / 问题咨询</div>
+  <div>微信:<b style="color:#0f766e;font-size:15px">tantantany</b>(备注:练题器)</div>
+  <div style="font-size:12px;margin-top:2px">完整版 19.9 元一次买断,1237 题 + 错题本 + 掌握度分析</div>
+</div>
 </body>
 </html>
