@@ -81,6 +81,10 @@ h1{font-size:20px;font-weight:900}
     <div style="text-align:center;font-size:34px;font-weight:900;margin:6px 0" id="rate">0%</div>
   </div>
   <div class="card">
+    <div style="font-size:15px;font-weight:800;margin-bottom:12px">薄弱知识点</div>
+    <div id="weakList" style="font-size:14px;line-height:2"></div>
+  </div>
+  <div class="card">
     <div style="font-size:15px;font-weight:800;margin-bottom:10px">错题</div>
     <div id="wrongList" style="font-size:13.5px;line-height:1.8;color:#374151"></div>
   </div>
@@ -158,7 +162,7 @@ function submit(){
   if(!picked){ alert('先选一个答案'); return; }
   const q = LIST[idx];
   const ok = picked === q.a;
-  if(ok) right++; else wrongs.push({q:q.q.slice(0,60), a:q.a, mine:picked, y:q.y, c:q.c});
+  if(ok) right++; else wrongs.push({q:q.q.slice(0,60), a:q.a, mine:picked, y:q.y, c:q.c, k:q.k||'其他'});
   document.querySelectorAll('.opt').forEach((el,i)=>{
     const lb = 'ABCD'[i];
     if(lb === q.a) el.classList.add('right');
@@ -184,6 +188,23 @@ function finish(){
   document.getElementById('rRight').textContent = right;
   document.getElementById('rWrong').textContent = wrongs.length;
   document.getElementById('rate').textContent = Math.round(right/total*100) + '%';
+  // 薄弱知识点统计
+  const kstat = {};
+  wrongs.forEach(w=>{ kstat[w.k] = (kstat[w.k]||0)+1; });
+  const arr = Object.entries(kstat).sort((a,b)=>b[1]-a[1]);
+  const weakBox = document.getElementById('weakList');
+  if(arr.length === 0){
+    weakBox.innerHTML = '<div style="color:#059669">全对，没有薄弱点</div>';
+  } else {
+    const max = arr[0][1];
+    weakBox.innerHTML = arr.map(([k,c],i)=>{
+      const pct = Math.round(c/max*100);
+      const color = i===0 ? '#dc2626' : (i===1 ? '#d97706' : '#6b7280');
+      return `<div style="margin:6px 0"><div style="display:flex;justify-content:space-between"><span>${k}</span><span style="color:${color};font-weight:700">错 ${c} 道</span></div><div style="height:5px;background:#e5e7eb;border-radius:3px;margin-top:4px"><i style="display:block;height:100%;width:${pct}%;background:${color};border-radius:3px"></i></div></div>`;
+    }).join('');
+    weakBox.innerHTML += `<div style="margin-top:12px;padding:10px 13px;background:#fef2f2;border-left:3px solid #ef4444;border-radius:6px;font-size:13px;color:#7f1d1d"><b>最该补的：${arr[0][0]}</b><br>这一块错了 ${arr[0][1]} 道，先把它的基础公式和例题过一遍，再专项刷题。</div>`;
+  }
+
   const wl = document.getElementById('wrongList');
   wl.innerHTML = wrongs.length===0 ? '没有错题，厉害' :
     wrongs.map((w,i)=>`<div style="padding:10px 0;border-bottom:1px solid #f3f4f6"><div style="font-size:11px;color:#9ca3af">${w.y||''} ${w.c||''}</div><div style="margin-top:3px">${esc(w.q)}…</div><div style="margin-top:3px;color:#dc2626;font-size:12px">你选 ${w.mine}，正确 ${w.a}</div></div>`).join('');
