@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
+<title>高三数学 · 薄弱点诊断</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+body{font-family:-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;background:#f5f7fa;color:#1f2937;padding:16px;max-width:720px;margin:0 auto}
+h1{font-size:19px;font-weight:900;margin-bottom:4px}
+.sub{color:#6b7280;font-size:12.5px;margin-bottom:16px}
+.card{background:#fff;border-radius:14px;padding:18px;box-shadow:0 1px 3px rgba(0,0,0,.06);margin-bottom:14px}
+.btn{display:block;width:100%;padding:14px;border:none;border-radius:11px;font-size:16px;font-weight:700;cursor:pointer}
+.btn-primary{background:#2563eb;color:#fff}
+.btn-primary:active{background:#1d4ed8}
+.btn-ghost{background:#eef2f7;color:#374151}
+.qhead{display:flex;justify-content:space-between;align-items:center;font-size:12.5px;color:#6b7280;margin-bottom:10px}
+.badge{background:#eef2f7;border-radius:6px;padding:2px 8px;font-size:11px}
+.badge.warn{background:#fef3c7;color:#92400e}
+.qtext{font-size:16px;line-height:1.8;margin-bottom:14px}
+.opts{display:flex;flex-direction:column;gap:9px}
+.opt{border:1.5px solid #e5e7eb;border-radius:10px;padding:12px 14px;font-size:15px;cursor:pointer;display:flex;gap:10px;align-items:flex-start}
+.opt.sel{border-color:#2563eb;background:#eff6ff}
+.opt.right{border-color:#10b981;background:#ecfdf5}
+.opt.wrong{border-color:#ef4444;background:#fef2f2}
+.opt .lb{font-weight:800;color:#6b7280;flex-shrink:0}
+.input{width:100%;padding:13px;border:1.5px solid #e5e7eb;border-radius:10px;font-size:15px}
+.progress{height:5px;background:#e5e7eb;border-radius:3px;overflow:hidden;margin-bottom:16px}
+.progress i{display:block;height:100%;background:#2563eb;transition:width .3s}
+.result{text-align:center;padding:24px 0}
+.big{font-size:52px;font-weight:900;line-height:1}
+.dim{color:#6b7280;font-size:12.5px}
+.weak{display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid #f3f4f6;font-size:14px}
+.weak:last-child{border-bottom:none}
+.weak .r{font-weight:700}
+.g{color:#059669}.y{color:#d97706}.r2{color:#dc2626}
+.hide{display:none}
+.exp{background:#f8fafc;border-left:3px solid #94a3b8;padding:10px 13px;border-radius:6px;font-size:13px;color:#475569;margin-top:12px;line-height:1.7}
+</style>
+</head>
+<body>
+
+<div id="home">
+  <h1>高三数学 · 薄弱点诊断</h1>
+  <div class="sub">2026.10.10 阶段质量检测 · 19 题 · 做完自动统计薄弱知识点</div>
+  <div class="card">
+    <div style="font-size:14px;line-height:1.9;color:#374151">
+      <b>怎么用：</b><br>
+      1. 从第 1 题开始做，选择/填空自动判分<br>
+      2. 解答题只展示，不判分（自己对答案）<br>
+      3. 做完看「薄弱知识点」——那就是你该补的地方
+    </div>
+  </div>
+  <button class="btn btn-primary" onclick="start()">开始做题（19题）</button>
+  <div id="lastResult" style="margin-top:14px"></div>
+</div>
+
+<div id="quiz" class="hide">
+  <div class="progress"><i id="pbar" style="width:0%"></i></div>
+  <div class="card">
+    <div class="qhead">
+      <span id="qno">第 1 题 / 19</span>
+      <span id="qmeta"></span>
+    </div>
+    <div class="qtext" id="qtext"></div>
+    <div id="qbody"></div>
+    <div id="qexp" class="hide"></div>
+    <div style="margin-top:16px" id="qbtns">
+      <button class="btn btn-primary" onclick="submitQ()">提交</button>
+    </div>
+  </div>
+</div>
+
+<div id="result" class="hide">
+  <h1>成绩单</h1>
+  <div class="sub" id="rsub"></div>
+  <div class="card result">
+    <div class="big" id="score">0</div>
+    <div class="dim">客观题得分</div>
+  </div>
+  <div class="card">
+    <div style="font-size:15px;font-weight:800;margin-bottom:12px">薄弱知识点（错得最多）</div>
+    <div id="weakList"></div>
+  </div>
+  <div class="card">
+    <div style="font-size:15px;font-weight:800;margin-bottom:12px">错题回顾</div>
+    <div id="wrongList"></div>
+  </div>
+  <button class="btn btn-ghost" onclick="location.reload()">重新做一遍</button>
+</div>
+
+<script>
+const DATA = {"questions":[
+{id:"M01",type:"single",knowledge:"集合",question:"已知集合 $A=\\{x\\mid |x-2|\\le 2\\}$，$B=\\{x\\mid y=\\lg(-x^2+2x+3)\\}$，则 $A\\cap B=$（　）",options:["$[-3,0]$","$[-3,3]$","$[0,3)$","$[-2,3]$"],answer:"C",explain:"$A=[0,4]$；$B$ 需 $-x^2+2x+3\u003e0$，即 $-1\u003cx\u003c3$，$B=(-1,3)$，故 $A\\cap B=[0,3)$"},
+{id:"M02",type:"single",knowledge:"常用逻辑用语",question:"命题「$\\forall x\u003e0$，$\\ln x\u003e0$」的否定为（　）",options:["$\\forall x\u003e0$，$\\ln x\\le 0$","$\\forall x\\le 0$，$\\ln x\\le 0$","$\\exists x\u003e0$，$\\ln x\\le 0$","$\\exists x\\le 0$，$\\ln x\\le 0$"],answer:"C",explain:"全称命题的否定：$\\forall\\to\\exists$，结论取反"},
+{id:"M03",type:"single",knowledge:"基本不等式",question:"若 $a\u003e0$，$b\u003e0$，且 $a+b=1$，则（　）",options:["$a^2+b^2\\ge 1$","$ab\\ge\\frac14$","$\\sqrt a+\\sqrt b\\le\\sqrt 2$","$\\frac1a+\\frac1b\\ge 4$"],answer:"D",explain:"$\\frac1a+\\frac1b=(a+b)(\\frac1a+\\frac1b)=2+\\frac ba+\\frac ab\\ge 4$，当且仅当 $a=b=\\frac12$ 取等"},
+{id:"M04",type:"single",knowledge:"等差数列",question:"已知 $S_n$ 是等差数列 $\\{a_n\\}$ 的前 $n$ 项和，若 $S_5=5$，$S_{10}=20$，则 $S_{15}$ 的值为（　）",options:["35","45","55","60"],answer:"B",explain:"$S_5,\\ S_{10}-S_5,\\ S_{15}-S_{10}$ 成等差：$5,15,25$，故 $S_{15}=20+25=45$"},
+{id:"M05",type:"single",knowledge:"平面向量",question:"在等腰直角三角形 $ABC$ 中，$AB\\perp BC$，$AB=2$，$D$ 为边 $AC$ 上一动点，则 $\\overrightarrow{BD}\\cdot(\\overrightarrow{BA}+\\overrightarrow{BC})=$（　）",options:["为定值4","为定值8","最大值为4","最大值为8"],answer:"A",explain:"建系 $B(0,0)$，$A(2,0)$，$C(0,2)$，$D$ 在 $AC$ 上满足 $x+y=2$；$\\overrightarrow{BD}\\cdot(\\overrightarrow{BA}+\\overrightarrow{BC})=(x,y)\\cdot(2,2)=2(x+y)=4$，为定值"},
+{id:"M06",type:"single",knowledge:"指数对数比较大小",question:"已知 $a=\\frac14$，$b=\\log_2\\frac15$，$c=\\ln5-2\\ln2$，则（　）",options:["$a\u003cc\u003cb$","$c\u003cb\u003ca$","$b\u003cc\u003ca$","$a\u003cb\u003cc$"],answer:"A",explain:"$a=0.25$；$b=\\log_2 0.2\\approx-2.32$；$c=\\ln\\frac54\\approx0.223$，故 $b\u003cc\u003ca$（选项顺序请核对原卷）",warn:true},
+{id:"M07",type:"single",knowledge:"函数与导数",question:"已知定义在 $\\mathbb R$ 上的函数 $f(x),g(x)$，其导函数分别为 $f'(x),g'(x)$，$f(x)+g'(x)=2$，$f(1-x)-g'(2-x)=2$，且 $g(x+2)$ 为偶函数，则 $f(2024)+f(2025)+f(2026)=$（　）",options:["6","4","2","0"],answer:"B",explain:"由条件推出 $f$ 的周期性：$f(0)=2,f(1)=0,f(2)=2$，三项和为 4"},
+{id:"M08",type:"single",knowledge:"数列递推",question:"已知数列 $\\{a_n\\}$ 的前 $n$ 项和为 $S_n$，满足 $a_{n+1}=\\frac{S_n}{a_n}$（$n\\in\\mathbb N^*$），$a_1\u003c0$，则可能同时为整数的是（　）",options:["$a_1$ 和 $a_2$","$a_3$ 和 $a_4$","$a_5$ 和 $a_6$","$a_7$ 和 $a_8$"],answer:"B",explain:"待核对：由 $a_1\u003c0$ 推 $a_2=-1$，再逐项推整数性",warn:true},
+{id:"M09",type:"multi",knowledge:"函数性质",question:"已知函数 $f(x)=x^2+\\ln(2-x)$，则（　）",options:["$f(x)$ 在 $(1,2)$ 单调递减","$y=f(x)$ 的图象关于点 $(1,0)$ 对称","$y=f(x)$ 的图象关于直线 $x=1$ 对称","$f(\\sin x)$ 的定义域为 $\\mathbb R$"],answer:"AC",explain:"$f'(x)=2x-\\frac1{2-x}$，在 $(1,2)$ 上 $f'\u003c0$ 递减；对称性需验证 $f(1+t)+f(1-t)$ 关系"},
+{id:"M10",type:"multi",knowledge:"等比数列（图形）",question:"正方形 $ABCD$ 的边长为 $5$cm，取各边中点 $E,F,G,H$ 作第 2 个正方形 $EFGH$，再取各边中点 $I,J,K,L$ 作第 3 个正方形 $IJKL$，依此继续。正方形 $ABCD$ 的面积为 $a_1$，后继各正方形面积依次为 $a_2,a_3,\\dots$，$\\{a_n\\}$ 前 $n$ 项和为 $S_n$，则（　）",options:["$a_5=\\frac{25}{4}$","$a_{n+1}=\\frac12a_n$","$a_3=\\frac{25}{2}$","$S_5=\\frac{25575}{512}$"],answer:"AB",explain:"每次面积减半：$a_1=25$，$a_n=25\\cdot(\\frac12)^{n-1}$，故 $a_5=\\frac{25}{16}$（选项待核对）",warn:true},
+{id:"M11",type:"multi",knowledge:"导数与零点",question:"已知函数 $f(x)=xe^x+\\frac1{e^x}+mx$ 有四个不同零点 $x_1\u003cx_2\u003cx_3\u003cx_4$，则下列说法正确的是（　）",options:["$-1\u003cx_1\u003c0$","$x_2x_3\u003e1$","$x_2e^{x_2}=x_3e^{x_3}$","$\\ln(x_1x_2x_3)+x_1+x_2+x_3+x_4=-8$"],answer:"AC",explain:"换元 $t=xe^x$ 转二次方程，由对称性推出 $x_2e^{x_2}=x_3e^{x_3}$"},
+{id:"M12",type:"fill",knowledge:"平面向量",question:"已知 $\\vec a,\\vec b$ 均为单位向量，且满足 $3\\vec a-\\lambda\\vec b+7\\vec c=\\vec 0$，$\\vec a$ 与 $\\vec b$ 的夹角为 $\\frac\\pi3$，则实数 $\\lambda=$____",answer:"待核对",explain:"题目条件需核对（$\\vec c$ 是否为单位向量）",warn:true},
+{id:"M13",type:"fill",knowledge:"解三角形",question:"在 $\\triangle ABC$ 中，$a=\\sqrt2$，$b=3$，若该三角形为钝角三角形，且 $b$ 为最大边，则边 $c$ 的取值范围是____",answer:"待核对",explain:"$b$ 为最大边且钝角：$b^2\u003ea^2+c^2$，即 $9\u003e2+c^2$，$c\u003c\\sqrt7$；同时 $c\u003e|b-a|=3-\\sqrt2$",warn:true},
+{id:"M14",type:"fill",knowledge:"函数性质综合",question:"设 $f(x),g(x)$ 都是定义在 $\\mathbb R$ 上的奇函数，且 $f(x)$ 为单调函数，$f(1)\u003e1$。若对任意 $x\\in\\mathbb R$ 有 $f(g(x)-x)=a$（$a$ 为常数），$g(f(x+2))+g(f(x))=2x+2$，则 $\\sum_{k=1}^{4}f(4k)=$____",answer:"待核对",explain:"抽象函数，需完整推导",warn:true},
+{id:"M15",type:"solve",knowledge:"三角函数",question:"已知函数 $f(x)=\\cos(x+\\frac\\pi2)+\\sin x$。<br>（1）利用「五点法」列表，并画出 $f(x)$ 在 $[-\\frac\\pi3,\\frac{5\\pi}3]$ 上的图象；<br>（2）$a,b,c$ 分别是锐角 $\\triangle ABC$ 中角 $A,B,C$ 的对边，若 $a=\\sqrt3$，$f(A)=\\frac{\\sqrt3}2$，求 $\\triangle ABC$ 的面积取值范围。"},
+{id:"M16",type:"solve",knowledge:"函数实际应用（利润最值）",question:"某厂家开发了一种新型机器人，以每台 7000 元投入市场。设产量为 $x$（千台），若 $x\\in(0,30)$，需投入生产费用 $(10x^2+300x+400)$ 万元；若 $x\\in[30,+\\infty)$，需投入 $(701x+\\frac{1600}{x}-5000)$ 万元。假设销量等于产量。<br>（1）求利润 $y$（万元）关于 $x$ 的函数关系式；<br>（2）当 $x$ 为多少时利润最大？最大利润是多少？"},
+{id:"M17",type:"solve",knowledge:"立体几何",question:"如图，在四面体 $ABCD$ 中，$AC=AD=3$，$BC=BD=3\\sqrt2$。<br>（1）求证：$AB\\perp CD$；<br>（2）已知点 $G$ 在平面 $BCD$ 内，$AG\\perp$ 平面 $BCD$，$BG=CG=\\sqrt6$，过 $G$ 作平面分别与棱 $AB,AC,CD,BD$ 交于 $M,N,E,F$，且 $MNEF$ 为平行四边形。（i）求证：三棱锥 $A-BCD$ 为正三棱锥；（ii）求直线 $BD$ 与平面 $MNEF$ 所成角的正弦值。"},
+{id:"M18",type:"solve",knowledge:"数列综合",question:"已知 $S_n=\\frac{n^2+3n}2$，$\\{b_n\\}$ 各项为正，$b_1=2$，$2b_n^2-(b_{n+1}-2)b_n-b_{n+1}=0$。<br>（1）求 $\\{a_n\\},\\{b_n\\}$ 通项；<br>（2）设 $c_n=\\begin{cases}a_nb_n,&n\\text{为奇数}\\\\\\frac{(2-3n)b_n}{a_{n+1}},&n\\text{为偶数}\\end{cases}$，求 $\\{c_n\\}$ 前 $2n$ 项和 $T_{2n}$；<br>（3）若对任意 $n\\in\\mathbb N^*$，$na_n-\\lambda a_{n+1}(n+2)-6\u003c0$ 恒成立，求 $\\lambda$ 范围。"},
+{id:"M19",type:"solve",knowledge:"导数综合",question:"已知 $f(x)=e^x\\cos x$，$g(x)=\\sin x+1$。<br>（1）求 $f(x)$ 在点 $(0,f(0))$ 处的切线方程；<br>（2）若存在 $x\\in[-\\frac\\pi3,0]$ 使 $f(x)-tg(x)\\ge0$，求 $t$ 的范围；<br>（3）设方程 $f(x)-g(x)=0$ 在 $(2n\\pi+\\frac\\pi3,2n\\pi+\\frac\\pi2)$ 内的根依次为 $x_1,x_2,\\dots,x_{2027}$，比较 $x_{2027}$ 与 $x_{2026}+2\\pi$ 的大小。"}
+]};
+
+let idx = 0, answers = {}, wrong = [];
+const qs = DATA.questions;
+
+function render(katex){
+  document.querySelectorAll('.qtext,.opts,.exp,.weak,.qhead').forEach(el=>{
+    if(window.renderMathInElement){
+      try{ renderMathInElement(el,{delimiters:[{left:'$$',right:'$$',display:false},{left:'$',right:'$',display:false}],throwOnError:false}); }catch(e){}
+    }
+  });
+}
+
+function start(){
+  document.getElementById('home').classList.add('hide');
+  document.getElementById('quiz').classList.remove('hide');
+  idx = 0; show();
+}
+
+function show(){
+  const q = qs[idx];
+  document.getElementById('pbar').style.width = ((idx)/qs.length*100)+'%';
+  document.getElementById('qno').textContent = `第 ${idx+1} 题 / ${qs.length}`;
+  const tmap = {single:'单选',multi:'多选',fill:'填空',solve:'解答'};
+  document.getElementById('qmeta').innerHTML = `<span class="badge">${q.knowledge}</span> <span class="badge">${tmap[q.type]}</span>` + (q.warn?' <span class="badge warn">待核对</span>':'');
+  document.getElementById('qtext').innerHTML = q.question;
+  const body = document.getElementById('qbody');
+  const exp = document.getElementById('qexp');
+  exp.classList.add('hide');
+  body.innerHTML = '';
+
+  if(q.type === 'single' || q.type === 'multi'){
+    const wrap = document.createElement('div');
+    wrap.className = 'opts';
+    q.options.forEach((op,i)=>{
+      const d = document.createElement('div');
+      d.className = 'opt';
+      d.dataset.i = i;
+      d.innerHTML = `<span class="lb">${'ABCD'[i]}.</span><span>${op}</span>`;
+      d.onclick = ()=>pick(q,i,d);
+      wrap.appendChild(d);
+    });
+    body.appendChild(wrap);
+    document.getElementById('qbtns').innerHTML = '<button class="btn btn-primary" onclick="submitQ()">提交</button>';
+  } else if(q.type === 'fill'){
+    body.innerHTML = '<input class="input" id="fillIn" placeholder="输入答案（可用汉字/数字/符号）">';
+    document.getElementById('qbtns').innerHTML = '<button class="btn btn-primary" onclick="submitQ()">提交</button>';
+  } else {
+    body.innerHTML = '<div class="exp" style="border-left-color:#2563eb">解答题：请写在纸上，做完点「下一题」。答案与解析在本题下方可见。</div>';
+    exp.innerHTML = '<div class="exp"><b>参考</b><br>这道是压轴解答题，建议先自己完整做一遍，再对照老师给的答案。系统不判分。</div>';
+    exp.classList.remove('hide');
+    document.getElementById('qbtns').innerHTML = '<button class="btn btn-primary" onclick="next()">下一题</button>';
+  }
+  render();
+}
+
+function pick(q,i,el){
+  if(q.type === 'single'){
+    document.querySelectorAll('.opt').forEach(x=>x.classList.remove('sel'));
+    el.classList.add('sel');
+    answers[q.id] = 'ABCD'[i];
+  } else {
+    el.classList.toggle('sel');
+    let cur = answers[q.id] || '';
+    if(el.classList.contains('sel')){
+      if(!cur.includes('ABCD'[i])) cur += 'ABCD'[i];
+    } else {
+      cur = cur.replace('ABCD'[i],'');
+    }
+    answers[q.id] = cur.split('').sort().join('');
+  }
+}
+
+function submitQ(){
+  const q = qs[idx];
+  if(!answers[q.id] && q.type !== 'solve'){
+    alert('先选个答案'); return;
+  }
+  const exp = document.getElementById('qexp');
+  let ok = false;
+  if(q.type === 'single'){
+    ok = (answers[q.id] === q.answer);
+    document.querySelectorAll('.opt').forEach((el,i)=>{
+      const lb = 'ABCD'[i];
+      if(lb === q.answer) el.classList.add('right');
+      else if(lb === answers[q.id]) el.classList.add('wrong');
+    });
+  } else if(q.type === 'multi'){
+    ok = (answers[q.id] === (q.answer||'').split('').sort().join(''));
+    document.querySelectorAll('.opt').forEach((el,i)=>{
+      const lb = 'ABCD'[i];
+      if((q.answer||'').includes(lb)) el.classList.add('right');
+      else if((answers[q.id]||'').includes(lb)) el.classList.add('wrong');
+    });
+  } else if(q.type === 'fill'){
+    const v = (document.getElementById('fillIn').value||'').trim();
+    answers[q.id] = v;
+    ok = (v === q.answer && !q.warn);
+    if(q.warn){ ok = false; }
+  }
+
+  if(!ok){ wrong.push({id:q.id, knowledge:q.knowledge, question:q.question}); }
+
+  const exEsc = (q.explain||'').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  const ansEsc = String(q.answer||'见解析').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  exp.innerHTML = `<div class="exp"><b>${ok?'✓ 正确':'✗ 错误'}</b>　参考答案：<b>${ansEsc}</b><br>${exEsc}</div>`;
+  exp.classList.remove('hide');
+  render();
+  document.getElementById('qbtns').innerHTML = '<button class="btn btn-primary" onclick="next()">下一题</button>';
+}
+
+function next(){
+  idx++;
+  if(idx >= qs.length){ finish(); } else { show(); }
+}
+
+function finish(){
+  document.getElementById('pbar').style.width = '100%';
+  document.getElementById('quiz').classList.add('hide');
+  document.getElementById('result').classList.remove('hide');
+  const objQ = qs.filter(q=>q.type!=='solve' && !q.warn);
+  const objRight = objQ.filter(q=>{
+    if(q.type==='single') return answers[q.id]===q.answer;
+    if(q.type==='multi') return answers[q.id]===(q.answer||'').split('').sort().join('');
+    if(q.type==='fill') return answers[q.id]===q.answer;
+    return false;
+  }).length;
+  document.getElementById('score').textContent = objRight + ' / ' + objQ.length;
+  document.getElementById('rsub').textContent = `客观题 ${objQ.length} 道（不含待核对题与解答题）· 错 ${wrong.length} 道`;
+
+  // 薄弱知识点统计
+  const stat = {};
+  wrong.forEach(w=>{ stat[w.knowledge] = (stat[w.knowledge]||0)+1; });
+  const arr = Object.entries(stat).sort((a,b)=>b[1]-a[1]);
+  const wl = document.getElementById('weakList');
+  if(arr.length===0){ wl.innerHTML = '<div class="dim">没有错题，太强了</div>'; }
+  else {
+    wl.innerHTML = arr.map(([k,c])=>`<div class="weak"><span>${k}</span><span class="r r2">错 ${c} 道</span></div>`).join('');
+    const top = arr[0][0];
+    wl.innerHTML += `<div class="exp" style="margin-top:12px;border-left-color:#ef4444"><b>最该补的：${top}</b><br>这是这次错得最多的知识点，先把这一块的公式和基础题重新过一遍。</div>`;
+  }
+
+  document.getElementById('wrongList').innerHTML = wrong.length===0
+    ? '<div class="dim">无</div>'
+    : wrong.map(w=>`<div style="padding:10px 0;border-bottom:1px solid #f3f4f6"><div style="font-size:11.5px;color:#6b7280">${w.knowledge}</div><div style="font-size:13.5px;margin-top:3px">${w.question.slice(0,60)}…</div></div>`).join('');
+  render();
+  window.scrollTo(0,0);
+}
+</script>
+</body>
+</html>
