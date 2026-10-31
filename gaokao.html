@@ -207,7 +207,9 @@ function finish(){
 
   const wl = document.getElementById('wrongList');
   wl.innerHTML = wrongs.length===0 ? '没有错题，厉害' :
-    wrongs.map((w,i)=>`<div style="padding:10px 0;border-bottom:1px solid #f3f4f6"><div style="font-size:11px;color:#9ca3af">${w.y||''} ${w.c||''}</div><div style="margin-top:3px">${esc(w.q)}…</div><div style="margin-top:3px;color:#dc2626;font-size:12px">你选 ${w.mine}，正确 ${w.a}</div></div>`).join('');
+    wrongs.map((w,i)=>`<div style="padding:10px 0;border-bottom:1px solid #f3f4f6"><div style="font-size:11px;color:#9ca3af">${w.y||''} ${w.c||''} ${w.k?'· '+w.k:''}</div><div style="margin-top:3px">${esc(w.q)}…</div><div style="margin-top:3px;color:#dc2626;font-size:12px">你选 ${w.mine}，正确 ${w.a}</div></div>`).join('');
+  // 渲染错题里的公式
+  try{ renderMath(wl); }catch(e){}
   window.scrollTo(0,0);
 }
 </script>
