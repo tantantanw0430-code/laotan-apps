@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
+<title>高考真题刷题器</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+body{font-family:-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;background:#f5f7fa;color:#1f2937;padding:16px;max-width:760px;margin:0 auto}
+h1{font-size:20px;font-weight:900}
+.sub{color:#6b7280;font-size:12.5px;margin:5px 0 16px}
+.card{background:#fff;border-radius:14px;padding:18px;box-shadow:0 1px 3px rgba(0,0,0,.06);margin-bottom:14px}
+.subj{display:grid;grid-template-columns:repeat(auto-fit,minmax(100px,1fr));gap:10px}
+.sj{background:#fff;border:1.5px solid #e5e7eb;border-radius:12px;padding:14px;text-align:center;cursor:pointer}
+.sj:active{background:#eff6ff;border-color:#2563eb}
+.sj .n{font-size:16px;font-weight:800}
+.sj .c{font-size:11.5px;color:#6b7280;margin-top:3px}
+.btn{display:block;width:100%;padding:14px;border:none;border-radius:11px;font-size:16px;font-weight:700;cursor:pointer;margin-top:10px}
+.bp{background:#2563eb;color:#fff}.bp:active{background:#1d4ed8}
+.bg{background:#eef2f7;color:#374151}
+.bar{display:flex;justify-content:space-between;align-items:center;font-size:12.5px;color:#6b7280;margin-bottom:10px}
+.progress{height:5px;background:#e5e7eb;border-radius:3px;overflow:hidden;margin-bottom:14px}
+.progress i{display:block;height:100%;background:#2563eb}
+.qtext{font-size:15.5px;line-height:1.85;margin-bottom:14px;white-space:pre-wrap}
+.opts{display:flex;flex-direction:column;gap:9px}
+.opt{border:1.5px solid #e5e7eb;border-radius:10px;padding:12px 14px;font-size:15px;cursor:pointer;display:flex;gap:9px}
+.opt.sel{border-color:#2563eb;background:#eff6ff}
+.opt.right{border-color:#10b981;background:#ecfdf5}
+.opt.wrong{border-color:#ef4444;background:#fef2f2}
+.opt .lb{font-weight:800;color:#6b7280;flex-shrink:0}
+.exp{background:#f8fafc;border-left:3px solid #94a3b8;padding:11px 14px;border-radius:6px;font-size:13px;color:#475569;margin-top:12px;line-height:1.8;white-space:pre-wrap}
+.meta{font-size:11px;color:#9ca3af;margin-top:8px}
+.hide{display:none}
+.stat{display:flex;gap:12px;text-align:center;margin:10px 0}
+.stat div{flex:1}
+.stat .v{font-size:24px;font-weight:900}
+.stat .l{font-size:11.5px;color:#6b7280}
+</style>
+</head>
+<body>
+
+<div id="home">
+  <h1>高考真题刷题器</h1>
+  <div class="sub">2010-2022 全国卷 · 选择题 · 带官方答案和解析</div>
+  <div class="subj" id="subjList"></div>
+  <div class="card" style="margin-top:14px">
+    <div style="font-size:13.5px;line-height:1.9;color:#374151">
+      <b>怎么用：</b><br>
+      1. 选一科开始刷<br>
+      2. 选答案 → 提交 → 看对错和解析<br>
+      3. 做完看正确率，错题会记录下来
+    </div>
+  </div>
+</div>
+
+<div id="quiz" class="hide">
+  <div class="progress"><i id="pbar" style="width:0%"></i></div>
+  <div class="card">
+    <div class="bar">
+      <span id="qno">第 1 题</span>
+      <span id="qmeta"></span>
+    </div>
+    <div class="qtext" id="qtext"></div>
+    <div id="qbody"></div>
+    <div id="qexp" class="hide"></div>
+    <div id="qbtns"></div>
+  </div>
+</div>
+
+<div id="result" class="hide">
+  <h1>本轮成绩</h1>
+  <div class="card">
+    <div class="stat">
+      <div><div class="v" id="rTotal">0</div><div class="l">做了</div></div>
+      <div><div class="v" style="color:#059669" id="rRight">0</div><div class="l">对</div></div>
+      <div><div class="v" style="color:#dc2626" id="rWrong">0</div><div class="l">错</div></div>
+    </div>
+    <div style="text-align:center;font-size:34px;font-weight:900;margin:6px 0" id="rate">0%</div>
+  </div>
+  <div class="card">
+    <div style="font-size:15px;font-weight:800;margin-bottom:10px">错题</div>
+    <div id="wrongList" style="font-size:13.5px;line-height:1.8;color:#374151"></div>
+  </div>
+  <button class="btn bg" onclick="location.reload()">重新开始</button>
+</div>
+
+<script>
+let BANK = null, SUBJ = '', LIST = [], idx = 0, right = 0, wrongs = [], picked = null;
+
+async function load(){
+  const r = await fetch('gaokao_bank.json');
+  BANK = await r.json();
+  const names = Object.keys(BANK);
+  const box = document.getElementById('subjList');
+  names.forEach(n=>{
+    const d = document.createElement('div');
+    d.className = 'sj';
+    d.innerHTML = `<div class="n">${n}</div><div class="c">${BANK[n].length} 题</div>`;
+    d.onclick = ()=>start(n);
+    box.appendChild(d);
+  });
+}
+load();
+
+function start(n){
+  SUBJ = n;
+  LIST = BANK[n].slice();
+  // 随机打乱
+  for(let i=LIST.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [LIST[i],LIST[j]]=[LIST[j],LIST[i]]; }
+  if(LIST.length > 30) LIST = LIST.slice(0,30);  // 每轮30题
+  idx = 0; right = 0; wrongs = [];
+  document.getElementById('home').classList.add('hide');
+  document.getElementById('quiz').classList.remove('hide');
+  show();
+}
+
+function renderMath(el){
+  if(!window.renderMathInElement) return;
+  try{ renderMathInElement(el,{delimiters:[{left:'$$',right:'$$',display:false},{left:'$',right:'$',display:false}],throwOnError:false}); }catch(e){}
+}
+
+function esc(s){ return String(s).replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+function show(){
+  const q = LIST[idx];
+  document.getElementById('pbar').style.width = (idx/LIST.length*100)+'%';
+  document.getElementById('qno').textContent = `第 ${idx+1} 题 / ${LIST.length}`;
+  document.getElementById('qmeta').textContent = `${SUBJ} · ${q.y||''} ${q.c||''}`;
+  document.getElementById('qtext').innerHTML = esc(q.q);
+  const body = document.getElementById('qbody');
+  body.innerHTML = '';
+  const wrap = document.createElement('div');
+  wrap.className = 'opts';
+  q.o.forEach((op,i)=>{
+    const d = document.createElement('div');
+    d.className = 'opt';
+    d.innerHTML = `<span class="lb">${'ABCD'[i]}.</span><span>${esc(op)}</span>`;
+    d.onclick = ()=>{
+      if(document.getElementById('qexp').classList.contains('hide')===false) return;
+      wrap.querySelectorAll('.opt').forEach(x=>x.classList.remove('sel'));
+      d.classList.add('sel');
+      picked = 'ABCD'[i];
+    };
+    wrap.appendChild(d);
+  });
+  body.appendChild(wrap);
+  const exp = document.getElementById('qexp');
+  exp.classList.add('hide'); exp.innerHTML='';
+  document.getElementById('qbtns').innerHTML = '<button class="btn bp" onclick="submit()">提交</button>';
+  picked = null;
+  renderMath(body); renderMath(document.getElementById('qtext'));
+}
+
+function submit(){
+  if(!picked){ alert('先选一个答案'); return; }
+  const q = LIST[idx];
+  const ok = picked === q.a;
+  if(ok) right++; else wrongs.push({q:q.q.slice(0,60), a:q.a, mine:picked, y:q.y, c:q.c});
+  document.querySelectorAll('.opt').forEach((el,i)=>{
+    const lb = 'ABCD'[i];
+    if(lb === q.a) el.classList.add('right');
+    else if(lb === picked) el.classList.add('wrong');
+  });
+  const exp = document.getElementById('qexp');
+  exp.innerHTML = `<div class="exp"><b>${ok?'✓ 正确':'✗ 错误'}</b>　正确答案：<b>${q.a}</b>\n${esc(q.ex||'')}</div>`;
+  exp.classList.remove('hide');
+  renderMath(exp);
+  document.getElementById('qbtns').innerHTML = '<button class="btn bp" onclick="next()">' + (idx>=LIST.length-1?'看成绩':'下一题') + '</button>';
+}
+
+function next(){
+  idx++;
+  if(idx >= LIST.length){ finish(); } else { show(); }
+}
+
+function finish(){
+  document.getElementById('quiz').classList.add('hide');
+  document.getElementById('result').classList.remove('hide');
+  const total = LIST.length;
+  document.getElementById('rTotal').textContent = total;
+  document.getElementById('rRight').textContent = right;
+  document.getElementById('rWrong').textContent = wrongs.length;
+  document.getElementById('rate').textContent = Math.round(right/total*100) + '%';
+  const wl = document.getElementById('wrongList');
+  wl.innerHTML = wrongs.length===0 ? '没有错题，厉害' :
+    wrongs.map((w,i)=>`<div style="padding:10px 0;border-bottom:1px solid #f3f4f6"><div style="font-size:11px;color:#9ca3af">${w.y||''} ${w.c||''}</div><div style="margin-top:3px">${esc(w.q)}…</div><div style="margin-top:3px;color:#dc2626;font-size:12px">你选 ${w.mine}，正确 ${w.a}</div></div>`).join('');
+  window.scrollTo(0,0);
+}
+</script>
+</body>
+</html>
