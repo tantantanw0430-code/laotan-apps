@@ -93,7 +93,7 @@ h1{font-size:20px;font-weight:900}
 
 <script>
 
-let BANK = null, SUBJ = '', LIST = [], idx = 0, right = 0, wrongs = [], picked = null;
+let BANK = null, SUBJ = '', LIST = [], idx = 0, right = 0, wrongs = [], picked = null, pickedMulti = [];
 
 async function load(){
   const r = await fetch('tiku/index.json?t=' + Date.now());
@@ -149,7 +149,7 @@ function show(){
   const q = LIST[idx];
   document.getElementById('pbar').style.width = (idx/LIST.length*100)+'%';
   document.getElementById('qno').textContent = `第 ${idx+1} 题 / ${LIST.length}`;
-  document.getElementById('qmeta').textContent = `${SUBJ} · ${q.y||''} ${q.c||''}`;
+  document.getElementById('qmeta').textContent = `${SUBJ} · ${q.y||''} ${q.c||''}${String(q.a).length>1?' · 多选':''}`;
   document.getElementById('qtext').innerHTML = escKeepImg(q.q);
   const body = document.getElementById('qbody');
   body.innerHTML = '';
@@ -161,9 +161,22 @@ function show(){
     d.innerHTML = `<span class="lb">${'ABCD'[i]}.</span><span>${escKeepImg(op)}</span>`;
     d.onclick = ()=>{
       if(document.getElementById('qexp').classList.contains('hide')===false) return;
-      wrap.querySelectorAll('.opt').forEach(x=>x.classList.remove('sel'));
-      d.classList.add('sel');
-      picked = 'ABCD'[i];
+      const isMulti = String(q.a).length > 1;
+      if(isMulti){
+        // 多选：切换
+        if(pickedMulti.includes('ABCD'[i])){
+          pickedMulti = pickedMulti.filter(x=>x!=='ABCD'[i]);
+          d.classList.remove('sel');
+        } else {
+          pickedMulti.push('ABCD'[i]);
+          d.classList.add('sel');
+        }
+      } else {
+        // 单选：互斥
+        wrap.querySelectorAll('.opt').forEach(x=>x.classList.remove('sel'));
+        d.classList.add('sel');
+        picked = 'ABCD'[i];
+      }
     };
     wrap.appendChild(d);
   });
@@ -176,14 +189,23 @@ function show(){
 }
 
 function submit(){
-  if(!picked){ alert('先选一个答案'); return; }
   const q = LIST[idx];
-  const ok = picked === q.a;
-  if(ok) right++; else wrongs.push({q:q.q.replace(/<img[^>]*>/g,'[图]').slice(0,60), a:q.a, mine:picked, y:q.y, c:q.c, k:q.k||'其他'});
+  const isMulti = String(q.a).length > 1;
+  let mine, ok;
+  if(isMulti){
+    if(pickedMulti.length === 0){ alert('至少选一个'); return; }
+    mine = pickedMulti.slice().sort().join('');
+    ok = mine === String(q.a).split('').sort().join('');
+  } else {
+    if(!picked){ alert('先选一个答案'); return; }
+    mine = picked;
+    ok = picked === q.a;
+  }
+  if(ok) right++; else wrongs.push({q:q.q.replace(/<img[^>]*>/g,'[图]').slice(0,60), a:q.a, mine:mine, y:q.y, c:q.c, k:q.k||'其他'});
   document.querySelectorAll('.opt').forEach((el,i)=>{
     const lb = 'ABCD'[i];
     if(lb === q.a) el.classList.add('right');
-    else if(lb === picked) el.classList.add('wrong');
+    else if((isMulti ? pickedMulti : [picked]).includes(lb)) el.classList.add('wrong');
   });
   const exp = document.getElementById('qexp');
   exp.innerHTML = `<div class="exp"><b>${ok?'✓ 正确':'✗ 错误'}</b>　正确答案：<b>${q.a}</b>\n${esc(q.ex||'')}</div>`;
