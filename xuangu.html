@@ -24,8 +24,10 @@ input[type=date]{width:145px}
 .info b{color:#fff}
 .hint{background:rgba(245,158,11,.1);border:1px solid rgba(245,158,11,.3);border-radius:10px;padding:11px 14px;font-size:12.5px;color:#fcd34d;margin-bottom:13px}
 .hint b{color:#fff}
-table{width:100%;border-collapse:collapse;font-size:12.5px;background:var(--card);border-radius:12px;overflow:hidden}
-th{background:#0b1220;color:var(--dim);text-align:left;padding:10px 8px;font-weight:700;font-size:11.5px;white-space:nowrap;position:sticky;top:0}
+.tscroll{overflow-x:auto;-webkit-overflow-scrolling:touch;border-radius:12px;margin-bottom:6px}
+table{width:100%;min-width:920px;border-collapse:collapse;font-size:12.5px;background:var(--card);border-radius:12px;overflow:hidden}
+th{background:#0b1220;color:var(--dim);text-align:left;padding:10px 6px;font-weight:700;font-size:11px;white-space:nowrap}
+td{padding:8px 6px;font-size:11.5px}
 td{padding:9px 8px;border-bottom:1px solid #1c2537;white-space:nowrap}
 tr:hover td{background:rgba(59,130,246,.07)}
 .code{color:#60a5fa;font-weight:700}
@@ -64,6 +66,7 @@ tr:hover td{background:rgba(59,130,246,.07)}
 
   <div id="result"><div class="empty">加载中…</div></div>
 
+  <div class="count" style="text-align:center;color:#64748b;margin:6px 0">← 表格可左右滑动查看全部列 →</div>
   <div class="foot">
     数据来源：东方财富 · 每日 19:00 自动更新<br>
     仅供参考，不构成投资建议
@@ -150,7 +153,7 @@ function render(){
     document.getElementById('result').innerHTML = `<div class="empty">该条件下没有命中的股票<br><span style="font-size:12px">试试取消"只看所选公告日"，或换个日期</span></div>`;
     return;
   }
-  let h = '<table><tr><th>代码</th><th>名称</th><th>匹配</th><th>单季净利(亿)</th><th>单季营收(亿)</th><th>净利增长</th><th>营收增长</th><th>预计净利(亿)</th><th>机构预期(亿)</th><th>超预期</th><th>总市值(亿)</th><th>PE</th><th>公告日</th></tr>';
+  let h = '<div class="tscroll"><table><tr><th>代码</th><th>名称</th><th>匹配</th><th>单季净利(亿)</th><th>单季营收(亿)</th><th>净利增长</th><th>营收增长</th><th>预计净利(亿)</th><th>机构预期(亿)</th><th>超预期</th><th>总市值(亿)</th><th>PE</th><th>公告日</th></tr>';
   list.forEach(r=>{
     const over = (r.forecast_net && r.est_net) ? ((r.est_net-r.forecast_net)/r.forecast_net*100) : null;
     h += `<tr>
@@ -169,7 +172,7 @@ function render(){
       <td>${(r.notice_date||'').slice(0,10)}</td>
     </tr>`;
   });
-  h += '</table>';
+  h += '</table></div>';
   document.getElementById('result').innerHTML = h;
 }
 fetchData();
