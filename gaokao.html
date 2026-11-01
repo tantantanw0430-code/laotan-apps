@@ -94,27 +94,36 @@ h1{font-size:20px;font-weight:900}
 <script>
 let BANK = null, SUBJ = '', LIST = [], idx = 0, right = 0, wrongs = [], picked = null;
 
+let BANK = null, SUBJ = '', LIST = [], idx = 0, right = 0, wrongs = [], picked = null;
+
 async function load(){
-  const r = await fetch('bank_v3.json');
-  BANK = await r.json();
-  const names = Object.keys(BANK);
+  const r = await fetch('tiku/index.json?t=' + Date.now());
+  const idx = await r.json();
   const box = document.getElementById('subjList');
-  names.forEach(n=>{
+  box.innerHTML = '';
+  idx.subjects.forEach(s => {
     const d = document.createElement('div');
     d.className = 'sj';
-    d.innerHTML = `<div class="n">${n}</div><div class="c">${BANK[n].length} 题</div>`;
-    d.onclick = ()=>start(n);
+    d.innerHTML = `<div class="n">${s.name}</div><div class="c">${s.count} 题</div>`;
+    d.onclick = () => start(s.name, s.file);
     box.appendChild(d);
   });
 }
 load();
 
-function start(n){
+async function start(n, file){
   SUBJ = n;
+  if(!BANK) BANK = {};
+  try {
+    const r = await fetch('tiku/' + file + '?t=' + Date.now());
+    BANK[n] = await r.json();
+  } catch(e) {
+    alert('题库加载失败，请重试');
+    return;
+  }
   LIST = BANK[n].slice();
-  // 随机打乱
   for(let i=LIST.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [LIST[i],LIST[j]]=[LIST[j],LIST[i]]; }
-  if(LIST.length > 30) LIST = LIST.slice(0,30);  // 每轮30题
+  if(LIST.length > 30) LIST = LIST.slice(0,30);
   idx = 0; right = 0; wrongs = [];
   document.getElementById('home').classList.add('hide');
   document.getElementById('quiz').classList.remove('hide');

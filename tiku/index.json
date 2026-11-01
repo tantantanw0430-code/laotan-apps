@@ -1,0 +1,31 @@
+{
+ "subjects": [
+  {
+   "name": "数学",
+   "count": 411,
+   "file": "数学.json"
+  },
+  {
+   "name": "物理",
+   "count": 39,
+   "file": "物理.json"
+  },
+  {
+   "name": "化学",
+   "count": 102,
+   "file": "化学.json"
+  },
+  {
+   "name": "生物",
+   "count": 155,
+   "file": "生物.json"
+  },
+  {
+   "name": "英语",
+   "count": 105,
+   "file": "英语.json"
+  }
+ ],
+ "total": 812,
+ "updated": "2026-11-01"
+}
