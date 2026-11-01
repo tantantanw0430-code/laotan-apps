@@ -95,7 +95,7 @@ h1{font-size:20px;font-weight:900}
 let BANK = null, SUBJ = '', LIST = [], idx = 0, right = 0, wrongs = [], picked = null;
 
 async function load(){
-  const r = await fetch('bank_v2.json');
+  const r = await fetch('bank_v3.json');
   BANK = await r.json();
   const names = Object.keys(BANK);
   const box = document.getElementById('subjList');
