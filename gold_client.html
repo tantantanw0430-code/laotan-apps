@@ -3,141 +3,191 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>耀莱黄金回收 · 获客方案</title>
+<title>耀莱黄金回收 · 执行方案</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
-body{font-family:-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;background:#f8fafc;color:#1f2937;padding:22px 16px;line-height:1.85}
+body{font-family:-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;background:#f8fafc;color:#1f2937;padding:20px 16px;line-height:1.8}
 .wrap{max-width:700px;margin:0 auto}
-h1{font-size:24px;font-weight:900;letter-spacing:-.5px}
-.sub{color:#64748b;font-size:13.5px;margin:8px 0 24px}
-h2{font-size:17px;font-weight:900;margin:32px 0 12px}
+h1{font-size:23px;font-weight:900;letter-spacing:-.5px}
+.sub{color:#64748b;font-size:13px;margin:6px 0 22px}
+h2{font-size:17px;font-weight:900;margin:30px 0 10px}
 h2 .n{display:inline-block;width:26px;height:26px;line-height:26px;text-align:center;background:#b45309;color:#fff;border-radius:7px;font-size:14px;margin-right:9px}
-.card{background:#fff;border:1px solid #e2e8f0;border-radius:12px;padding:18px 20px;margin-bottom:13px}
-.lead{background:#0f172a;color:#fff;border-radius:14px;padding:22px;margin-bottom:20px}
-.lead .t{font-size:18px;font-weight:900;line-height:1.6}
-.lead .d{font-size:14px;color:#cbd5e1;margin-top:12px;line-height:1.9}
-.lead .d b{color:#fbbf24}
-.quote{background:#fff;border-left:4px solid #f59e0b;border-radius:0 8px 8px 0;padding:13px 16px;margin:11px 0;font-size:14.5px;color:#334155;box-shadow:0 1px 3px rgba(0,0,0,.05)}
+.card{background:#fff;border:1px solid #e2e8f0;border-radius:12px;padding:16px 18px;margin-bottom:12px}
+.step{display:flex;gap:12px;padding:14px 0;border-bottom:1px solid #f1f5f9}
+.step:last-child{border-bottom:none}
+.step .num{flex-shrink:0;width:28px;height:28px;line-height:28px;text-align:center;background:#0f172a;color:#fff;border-radius:50%;font-size:13px;font-weight:800}
+.step .body{flex:1}
+.step .t{font-size:15px;font-weight:800;color:#0f172a}
+.step .d{font-size:13.5px;color:#475569;margin-top:4px;line-height:1.75}
+.step .who{display:inline-block;font-size:11px;padding:1px 8px;border-radius:4px;margin-left:6px;vertical-align:middle}
+.w1{background:#dcfce7;color:#15803d}
+.w2{background:#dbeafe;color:#1d4ed8}
+table{width:100%;border-collapse:collapse;font-size:13px;margin:8px 0}
+th{background:#f1f5f9;color:#475569;text-align:left;padding:9px 7px;font-weight:700;font-size:12px}
+td{padding:9px 7px;border-bottom:1px solid #f1f5f9;vertical-align:top;color:#334155}
+.quote{background:#fff;border-left:4px solid #f59e0b;border-radius:0 8px 8px 0;padding:12px 15px;margin:10px 0;font-size:13.5px;color:#334155;box-shadow:0 1px 2px rgba(0,0,0,.04)}
 .quote b{color:#b45309}
-table{width:100%;border-collapse:collapse;font-size:13.5px;margin:10px 0}
-th{background:#f1f5f9;color:#475569;text-align:left;padding:10px 8px;font-weight:700;font-size:12.5px}
-td{padding:10px 8px;border-bottom:1px solid #f1f5f9;vertical-align:top;color:#334155}
-.bad{color:#dc2626;font-weight:700}.good{color:#16a34a;font-weight:700}
-ul{margin:8px 0 0 20px;font-size:14.5px;color:#334155}
-li{margin:7px 0}
-li::marker{color:#94a3b8}
-.big-num{font-size:22px;font-weight:900;color:#b45309}
+.lead{background:#0f172a;color:#fff;border-radius:14px;padding:20px;margin-bottom:18px}
+.lead .t{font-size:17px;font-weight:900;line-height:1.6}
+.lead .d{font-size:13.5px;color:#cbd5e1;margin-top:10px;line-height:1.85}
+.lead .d b{color:#fbbf24}
+.check{display:flex;align-items:center;gap:10px;padding:11px 0;border-bottom:1px solid #f1f5f9;font-size:14px}
+.check:last-child{border:none}
+.check input{width:20px;height:20px;flex-shrink:0;cursor:pointer}
+.check .txt{flex:1}
+.check.done .txt{color:#94a3b8;text-decoration:line-through}
+.daybox{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;margin:10px 0}
+.day{background:#f1f5f9;border-radius:7px;padding:8px 2px;text-align:center;font-size:11px;color:#64748b;cursor:pointer;border:1.5px solid transparent}
+.day.on{background:#dcfce7;border-color:#16a34a;color:#15803d;font-weight:700}
+.day .d{font-size:15px;font-weight:800;color:#334155}
+.day.on .d{color:#15803d}
+.count{font-size:13px;color:#64748b;margin-top:8px}
+.count b{color:#b45309;font-size:16px}
 .foot{color:#94a3b8;font-size:11.5px;text-align:center;margin-top:36px;line-height:1.9}
-.divider{height:1px;background:#e2e8f0;margin:28px 0}
-.tag{display:inline-block;background:#fffbeb;color:#b45309;border:1px solid #fcd34d;font-size:11.5px;padding:2px 9px;border-radius:5px;margin-left:6px;vertical-align:middle}
+.divider{height:1px;background:#e2e8f0;margin:26px 0}
+.mini{font-size:12px;color:#94a3b8}
 </style>
 </head>
 <body>
 <div class="wrap">
-  <h1>耀莱黄金回收 · 获客方案</h1>
-  <div class="sub">2026-11 · 让搜"黄金回收"的人，先找到你</div>
+  <h1>耀莱黄金回收 · 执行方案</h1>
+  <div class="sub">2026-11 · 一步一步照着做</div>
 
   <div class="lead">
-    <div class="t">先说结论：不是投广告，是让客户"问 AI 的时候，AI 说你"。</div>
+    <div class="t">目标只有一个：客户问 AI「烟台黄金回收哪家靠谱」的时候，AI 说出「耀莱黄金回收」。</div>
     <div class="d">
-      现在买金卖金的人，不搜百度了，直接问 AI：<b>"烟台哪家黄金回收靠谱？"</b><br>
-      AI 给几个名字，客户就去那几家。<br><br>
-      <b>AI 不认识你，客户就永远不会来。</b>
+      这件事急不来，但要每天做。<b>做一个月，你再去问 AI，就知道有没有用。</b>
     </div>
   </div>
 
-  <h2><span class="n">1</span>你现在的情况</h2>
+  <h2><span class="n">1</span>第一步：注册（一次性，半小时）</h2>
+  <div class="card">
+    <div class="step">
+      <div class="num">1</div>
+      <div class="body">
+        <div class="t">注册企业微信<span class="who w1">你做</span></div>
+        <div class="d">
+          用你不常用的那个手机号，认证时用营业执照。<br>
+          <b>免费的。</b>以后 GEO 内容里就放这个企业微信的二维码。<br>
+          客户从这加你 = 是我们带来的，一眼能看出来。
+        </div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="num">2</div>
+      <div class="body">
+        <div class="t">注册内容平台账号<span class="who w1">你做</span></div>
+        <div class="d">
+          四个：<b>知乎、百家号、小红书、胶东在线</b>（本地论坛）。<br>
+          用手机号注册，实名认证。花 20 分钟。
+        </div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="num">3</div>
+      <div class="body">
+        <div class="t">把账号密码（或扫码）给我<span class="who w1">你做</span></div>
+        <div class="d">
+          两种方式：<br>
+          · 你扫码登录一次，我远程帮你发<br>
+          · 或者我把内容发你，你自己复制粘贴（每天5分钟）
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <h2><span class="n">2</span>第二步：每天干什么（每天 5 分钟）</h2>
+  <div class="card">
+    <div class="step">
+      <div class="num">4</div>
+      <div class="body">
+        <div class="t">发一条内容<span class="who w1">你做</span></div>
+        <div class="d">
+          我每天写好发你，你复制粘贴到对应平台。<br>
+          <b>一条 500-800 字，带标题、带话题标签，不用改一个字。</b>
+        </div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="num">5</div>
+      <div class="body">
+        <div class="t">记一笔到店<span class="who w1">你做</span></div>
+        <div class="d">
+          每天下班前，记一下：<b>今天到店几组？从哪来的？</b>（企业微信来的单独记）<br>
+          这个数字最真，电话量能刷，到店刷不了。
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <h2><span class="n">3</span>我这边干什么</h2>
+  <div class="card">
+    <div class="step">
+      <div class="num">6</div>
+      <div class="body">
+        <div class="t">写内容<span class="who w2">我做</span></div>
+        <div class="d">
+          每天 1-2 篇，围绕：<b>免费上门 · 简单加工 · 避坑 · 金价 · 流程</b>。<br>
+          重点打「旧金能改款加工」——这个同行少，是你的差异。
+        </div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="num">7</div>
+      <div class="body">
+        <div class="t">查 AI 提没提你<span class="who w2">我做</span></div>
+        <div class="d">
+          每周一次，问 AI「烟台黄金回收哪家靠谱」，看有没有你的名字。<br>
+          有 → 说明有效；没有 → 加内容、换平台。
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <h2><span class="n">4</span>每日打卡（今天发了吗）</h2>
+  <div class="card">
+    <div class="mini" style="margin-bottom:10px;">点一下打勾，会自动存在这个手机上。断了几天自己心里有数。</div>
+    <div class="check" onclick="toggle(this,'c1')"><input type="checkbox" id="c1"><span class="txt">今天的内容发了</span></div>
+    <div class="check" onclick="toggle(this,'c2')"><input type="checkbox" id="c2"><span class="txt">今天记了到店数</span></div>
+    <div class="check" onclick="toggle(this,'c3')"><input type="checkbox" id="c3"><span class="txt">今天有人从企业微信加我</span></div>
+    <div class="divider" style="margin:16px 0"></div>
+    <div class="mini" style="margin-bottom:8px;">这个月发了几篇（点日期标记）：</div>
+    <div class="daybox" id="days"></div>
+    <div class="count">本月已发：<b id="cnt">0</b> 篇</div>
+    <button onclick="resetMonth()" style="margin-top:12px;padding:8px 16px;border:1px solid #e2e8f0;background:#fff;border-radius:8px;font-size:13px;color:#64748b;cursor:pointer">清空本月记录</button>
+  </div>
+
+  <h2><span class="n">5</span>大概要花多少钱</h2>
   <div class="card">
     <table>
-      <tr><th>渠道</th><th>情况</th></tr>
-      <tr><td>门店</td><td>有客流，但不够</td></tr>
-      <tr><td>投广告（竞价/信息流）</td><td class="bad">一条线索 200-300 元，一单只赚几十块，投就是亏</td></tr>
-      <tr><td>高德</td><td>有合作，但<b>电话量能刷，到店不多</b></td></tr>
-      <tr><td>抖音</td><td>有账号，但内容没方向</td></tr>
-    </table>
-    <div class="quote" style="border-left-color:#dc2626;background:#fef2f2">
-      说白了：<b>你缺的不是"曝光"，是"信任"。</b><br>
-      客户不敢进门，不是因为没看到你，是因为<b>不知道你靠不靠谱</b>。
-    </div>
-  </div>
-
-  <h2><span class="n">2</span>我们做三件事</h2>
-
-  <div class="card">
-    <div style="font-size:16px;font-weight:900;margin-bottom:6px">① 让 AI 推荐你<span class="tag">核心</span></div>
-    <p style="font-size:14.5px;color:#334155">
-      把"耀莱黄金回收"的信息，铺到 AI 能看到的地方（知乎、百家号、小红书、本地论坛）。<br>
-      客户问 AI"烟台黄金回收哪家靠谱"，AI 的答案里<b>出现你的名字</b>。
-    </p>
-    <div class="quote">
-      <b>这不是发广告，是回答客户真在问的问题。</b><br>
-      AI 只信"有用的内容"，不信广告。
-    </div>
-  </div>
-
-  <div class="card">
-    <div style="font-size:16px;font-weight:900;margin-bottom:6px">② 高德上"看着正规"</div>
-    <p style="font-size:14.5px;color:#334155">
-      门头照、评价、简介——客户在高德上搜到你，<b>一眼觉得"这是正经生意"</b>。
-    </p>
-  </div>
-
-  <div class="card">
-    <div style="font-size:16px;font-weight:900;margin-bottom:6px">③ 抖音上"敢来"</div>
-    <p style="font-size:14.5px;color:#334155">
-      拍避坑、拍现场、报金价——客户被 AI 推荐之后，搜到你的抖音，<b>敢进门</b>。
-    </p>
-  </div>
-
-  <h2><span class="n">3</span>做完会是什么样</h2>
-  <div class="card">
-    <p style="font-size:14.5px;color:#334155;margin-bottom:10px">
-      <b>别的店（同样做黄金回收）的真实情况：</b>
-    </p>
-    <table>
-      <tr><th>时间</th><th>发生了什么</th></tr>
-      <tr><td>第 1 个月</td><td>内容在铺，AI 还在"学"，<b>没什么线索</b>（正常）</td></tr>
-      <tr><td>第 2 个月</td><td>AI 开始提名字，来了第一个从 AI 来的客户</td></tr>
-      <tr><td>第 3 个月</td><td class="good">AI 渠道的咨询涨了 65%</td></tr>
-    </table>
-    <div class="quote">
-      <b>要注意：</b>第一个月没线索是正常的。<b>这事急不来</b>，它是"建名声"，不是"买流量"。
-    </div>
-  </div>
-
-  <h2><span class="n">4</span>大概要花多少钱</h2>
-  <div class="card">
-    <p style="font-size:14.5px;color:#334155;margin-bottom:10px">
-      先给你个数，心里有个底。具体怎么做、做多少，可以再商量。
-    </p>
-    <table>
-      <tr><th>怎么算</th><th>大概</th></tr>
-      <tr><td>内容 + 分发 + 监测（包月）</td><td><span class="big-num">800 元/月</span></td></tr>
+      <tr><th>怎么算</th><th>价格</th></tr>
+      <tr><td>企业微信、平台账号</td><td><b>0 元</b></td></tr>
+      <tr><td>内容 + 分发 + 监测（包月）</td><td><b>800 元/月</b></td></tr>
       <tr><td>如果按效果算</td><td><b>到店一组 30 元</b>，没到店不收</td></tr>
     </table>
     <div class="quote" style="border-left-color:#16a34a;background:#f0fdf4">
-      <b>我们建议的起步方式：</b><br>
-      先做一个月，<b>不收费</b>。<br>
-      你自己去问 AI"烟台黄金回收哪家靠谱"——<b>AI 提你名字的那天，再说钱的事</b>。
+      <b>起步方式：</b>先做一个月，<b>不收费</b>。<br>
+      你自己去问 AI「烟台黄金回收哪家靠谱」——<b>AI 提你名字的那天，再说钱的事</b>。
     </div>
     <div class="quote">
       <b>说句实在话：</b>我们现在也在攒案例。<b>你这个店做成了，对我们比这个月的钱重要</b>。<br>
-      所以价格给的是实价，不玩虚的——<b>800 一个月，或者到店一组 30</b>。<br>
-      你觉得哪个合适，咱就按哪个来。
+      所以价格给的是实价——<b>800 一个月，或者到店一组 30</b>。你觉得哪个合适，咱就按哪个来。
     </div>
   </div>
 
-  <h2><span class="n">5</span>从哪开始</h2>
+  <h2><span class="n">6</span>第一个月会发生什么</h2>
   <div class="card">
     <table>
-      <tr><th>第一步</th><th>你要做的</th></tr>
-      <tr><td>1</td><td>告诉我：你的店全称、地址、营业时间</td></tr>
-      <tr><td>2</td><td>给我 3-5 张门头照、店内照（手机拍就行）</td></tr>
-      <tr><td>3</td><td>告诉我：你最想接哪类客户（金条？金饰？还是都做）</td></tr>
+      <tr><th>时间</th><th>预期</th></tr>
+      <tr><td>第 1 周</td><td>注册完，开始发内容，<b>没线索（正常）</b></td></tr>
+      <tr><td>第 2-3 周</td><td>内容被收录，AI 开始"看到"你</td></tr>
+      <tr><td>第 4 周</td><td>问 AI 时，可能开始出现你的名字</td></tr>
+      <tr><td>第 2 个月</td><td>陆续有从企业微信来的人</td></tr>
+      <tr><td>第 3 个月</td><td>稳定出线索</td></tr>
     </table>
-    <div class="quote" style="border-left-color:#2563eb;background:#eff6ff">
-      <b>然后我做：</b>先帮你查一遍"AI 现在认不认识你"，再开始铺内容。<br>
-      一周内给你看第一批东西。
+    <div class="quote" style="border-left-color:#dc2626;background:#fef2f2">
+      <b>先说清楚：</b>第一个月没线索是正常的。<b>这事急不来</b>。<br>
+      如果有人跟你说"一周就能获客"，那是骗你的。
     </div>
   </div>
 
@@ -145,7 +195,7 @@ li::marker{color:#94a3b8}
 
   <div class="card" style="background:#0f172a;color:#fff;border:none">
     <div style="font-size:16px;font-weight:900;margin-bottom:8px">最后一句</div>
-    <div style="font-size:14.5px;color:#cbd5e1;line-height:1.9">
+    <div style="font-size:14px;color:#cbd5e1;line-height:1.9">
       以前是"谁的广告出价高，客户看到谁"。<br>
       现在是"AI 觉得谁靠谱，客户就找谁"。<br><br>
       <b style="color:#fbbf24">我们要做的，就是让 AI 觉得你靠谱。</b>
@@ -157,5 +207,50 @@ li::marker{color:#94a3b8}
     先把事做出来，有效果再谈钱
   </div>
 </div>
+
+<script>
+// 打卡（存 localStorage）
+function toggle(el, id){
+  const cb = document.getElementById(id);
+  cb.checked = !cb.checked;
+  el.classList.toggle('done', cb.checked);
+  localStorage.setItem('gold_'+id, cb.checked ? '1' : '0');
+}
+['c1','c2','c3'].forEach(id=>{
+  const cb = document.getElementById(id);
+  const el = cb.closest('.check');
+  if(localStorage.getItem('gold_'+id)==='1'){ cb.checked=true; el.classList.add('done'); }
+});
+
+// 月份打卡
+const KEY = 'gold_days';
+function getDays(){ try{ return JSON.parse(localStorage.getItem(KEY)||'[]'); }catch(e){ return []; } }
+function saveDays(a){ localStorage.setItem(KEY, JSON.stringify(a)); }
+function renderDays(){
+  const box = document.getElementById('days');
+  box.innerHTML = '';
+  const now = new Date();
+  const days = getDays();
+  const monthKey = now.getFullYear()+'-'+(now.getMonth()+1);
+  // 显示1-30号
+  for(let d=1; d<=30; d++){
+    const key = monthKey+'-'+d;
+    const el = document.createElement('div');
+    el.className = 'day' + (days.includes(key)?' on':'');
+    el.innerHTML = '<div class="d">'+d+'</div>';
+    el.onclick = ()=>{
+      let a = getDays();
+      if(a.includes(key)) a = a.filter(x=>x!==key); else a.push(key);
+      saveDays(a); renderDays();
+    };
+    box.appendChild(el);
+  }
+  document.getElementById('cnt').textContent = days.filter(x=>x.startsWith(monthKey)).length;
+}
+function resetMonth(){
+  if(confirm('清空本月打卡记录？')){ saveDays([]); renderDays(); }
+}
+renderDays();
+</script>
 </body>
 </html>
