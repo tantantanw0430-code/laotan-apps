@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>A股选股 · 每日筛选</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+:root{--bg:#0a0e17;--card:#141a26;--card2:#1a2233;--line:#25304a;--txt:#e8eef7;--dim:#8899b0;--blue:#3b82f6;--green:#10b981;--red:#ef4444;--amber:#f59e0b}
+body{font-family:-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--txt);min-height:100vh;padding:18px 12px 40px;line-height:1.6;-webkit-font-smoothing:antialiased}
+body::before{content:'';position:fixed;inset:0;z-index:-1;background:radial-gradient(ellipse 80% 50% at 20% 0%,rgba(59,130,246,.16),transparent 60%),radial-gradient(ellipse 60% 40% at 90% 20%,rgba(139,92,246,.12),transparent 60%)}
+.wrap{max-width:1400px;margin:0 auto}
+h1{font-size:21px;font-weight:900;letter-spacing:-.4px}
+h1 .g{background:linear-gradient(135deg,#60a5fa,#a78bfa);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.sub{color:var(--dim);font-size:12px;margin:4px 0 16px}
+.bar{background:var(--card);border:1px solid var(--line);border-radius:13px;padding:13px 15px;margin-bottom:13px;display:flex;flex-wrap:wrap;gap:10px;align-items:center;font-size:13px}
+.bar label{color:var(--dim);font-size:12px}
+input[type=number],input[type=date]{background:var(--card2);border:1px solid var(--line);color:var(--txt);border-radius:8px;padding:7px 9px;font-size:13px;width:100px;font-family:inherit}
+input[type=date]{width:145px}
+.btn{background:var(--card2);border:1px solid var(--line);color:var(--txt);padding:7px 14px;border-radius:8px;font-size:13px;cursor:pointer;font-family:inherit;transition:.14s}
+.btn:active{transform:scale(.97)}
+.btn.on{background:linear-gradient(135deg,#3b82f6,#6366f1);border-color:transparent;color:#fff;font-weight:700}
+.info{background:rgba(59,130,246,.1);border:1px solid rgba(59,130,246,.3);border-radius:10px;padding:11px 14px;font-size:12.5px;color:#93c5fd;margin-bottom:13px}
+.info b{color:#fff}
+.hint{background:rgba(245,158,11,.1);border:1px solid rgba(245,158,11,.3);border-radius:10px;padding:11px 14px;font-size:12.5px;color:#fcd34d;margin-bottom:13px}
+.hint b{color:#fff}
+table{width:100%;border-collapse:collapse;font-size:12.5px;background:var(--card);border-radius:12px;overflow:hidden}
+th{background:#0b1220;color:var(--dim);text-align:left;padding:10px 8px;font-weight:700;font-size:11.5px;white-space:nowrap;position:sticky;top:0}
+td{padding:9px 8px;border-bottom:1px solid #1c2537;white-space:nowrap}
+tr:hover td{background:rgba(59,130,246,.07)}
+.code{color:#60a5fa;font-weight:700}
+.name{font-weight:700}
+.pos{color:#34d399}
+.neg{color:#f87171}
+.tag{display:inline-block;padding:1px 6px;border-radius:4px;font-size:10.5px;font-weight:700;background:rgba(139,92,246,.18);color:#c4b5fd}
+.empty{text-align:center;color:var(--dim);padding:40px 0;font-size:14px}
+.foot{color:#475569;font-size:11px;text-align:center;margin-top:24px;line-height:1.8}
+.count{color:var(--dim);font-size:12px;margin:8px 0}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>A股选股 · <span class="g">每日筛选</span></h1>
+  <div class="sub">业绩预增 + 单季增长 | 每日自动更新</div>
+
+  <div class="info" id="dataInfo">加载中…</div>
+  <div class="hint" id="dateHint" style="display:none"></div>
+
+  <div class="bar">
+    <span><label>公告日</label> <input type="date" id="f_date"></span>
+    <button class="btn" onclick="setDate(0)">今天</button>
+    <button class="btn" onclick="setDate(-1)">昨天</button>
+    <button class="btn" onclick="setDate(-2)">前天</button>
+    <button class="btn on" onclick="showLatest()">最新公告日</button>
+    <label style="margin-left:8px"><input type="checkbox" id="f_today" checked onchange="render()"> 只看所选公告日</label>
+  </div>
+
+  <div class="bar">
+    <span><label>单季净利≥(万)</label> <input type="number" id="f_net" value="0" onchange="render()"></span>
+    <span><label>净利增长≥%</label> <input type="number" id="f_ng" value="0" onchange="render()"></span>
+    <span><label>动态PE&lt;</label> <input type="number" id="f_pe" value="200" onchange="render()"></span>
+    <span id="countBox" class="count"></span>
+  </div>
+
+  <div id="result"><div class="empty">加载中…</div></div>
+
+  <div class="foot">
+    数据来源：东方财富 · 每日 19:00 自动更新<br>
+    仅供参考，不构成投资建议
+  </div>
+</div>
+
+<script>
+let ALL = [], LATEST = '';
+
+function fetchData(){
+  fetch('stock_data.json?t='+Date.now())
+    .then(r=>r.json())
+    .then(d=>{
+      ALL = d.results || [];
+      const upd = d.update_time || '未知';
+      document.getElementById('dataInfo').innerHTML =
+        `📊 数据更新：<b>${upd}</b> ｜ 全市场 <b>${d.total_stocks||0}</b> 只 ｜ 筛出 <b>${d.result_count||ALL.length}</b> 只`;
+      // 找最新公告日
+      const dates = ALL.map(r=>(r.notice_date||'').slice(0,10)).filter(Boolean);
+      const uniq = [...new Set(dates)].sort().reverse();
+      LATEST = uniq[0] || '';
+      // 默认最新
+      if(LATEST){
+        document.getElementById('f_date').value = LATEST;
+      }else{
+        const t = new Date();
+        document.getElementById('f_date').value = t.toISOString().slice(0,10);
+      }
+      render();
+      showLatestHint(uniq);
+    })
+    .catch(e=>{
+      document.getElementById('result').innerHTML = '<div class="empty">数据加载失败：'+e.message+'</div>';
+    });
+}
+function showLatestHint(uniq){
+  if(!uniq) return;
+  const h = document.getElementById('dateHint');
+  const cnt = ALL.filter(r=>(r.notice_date||'').slice(0,10)===LATEST).length;
+  h.style.display = 'block';
+  h.innerHTML = `📅 最新公告日 <b>${LATEST}</b>：${cnt} 只 ｜ 最近有数据：${uniq.slice(0,5).join(' / ')}`;
+}
+function setDate(offset){
+  const d = new Date(); d.setDate(d.getDate()+offset);
+  const m = String(d.getMonth()+1).padStart(2,'0');
+  const day = String(d.getDate()).padStart(2,'0');
+  document.getElementById('f_date').value = d.getFullYear()+'-'+m+'-'+day;
+  document.getElementById('f_today').checked = true;
+  render();
+}
+function showLatest(){
+  if(LATEST){
+    document.getElementById('f_date').value = LATEST;
+    document.getElementById('f_today').checked = true;
+    render();
+  }
+}
+function fmt(n, d=2){
+  if(n===null||n===undefined||isNaN(n)) return '';
+  return Number(n).toFixed(d);
+}
+function pct(n){
+  if(n===null||n===undefined||isNaN(n)) return '';
+  const s = Number(n).toFixed(0);
+  return `<span class="${n>=0?'pos':'neg'}">${s}%</span>`;
+}
+function render(){
+  const net = parseFloat(document.getElementById('f_net').value)||0;
+  const ng = parseFloat(document.getElementById('f_ng').value)||0;
+  const pe = parseFloat(document.getElementById('f_pe').value)||999;
+  const onlyDate = document.getElementById('f_today').checked;
+  const date = document.getElementById('f_date').value;
+
+  let list = ALL.filter(r=> (r.single_net*10000>=net) && (r.net_growth>=ng) && (r.dynamic_pe===null||r.dynamic_pe<pe) );
+  let dateCount = 0;
+  if(onlyDate && date){
+    const todays = list.filter(r=>(r.notice_date||'').slice(0,10)===date);
+    dateCount = todays.length;
+    list = todays;
+  }
+  document.getElementById('countBox').textContent = `命中 ${list.length} 只`;
+
+  if(!list.length){
+    document.getElementById('result').innerHTML = `<div class="empty">该条件下没有命中的股票<br><span style="font-size:12px">试试取消"只看所选公告日"，或换个日期</span></div>`;
+    return;
+  }
+  let h = '<table><tr><th>代码</th><th>名称</th><th>匹配</th><th>单季净利(亿)</th><th>单季营收(亿)</th><th>净利增长</th><th>营收增长</th><th>预计净利(亿)</th><th>机构预期(亿)</th><th>超预期</th><th>总市值(亿)</th><th>PE</th><th>公告日</th></tr>';
+  list.forEach(r=>{
+    const over = (r.forecast_net && r.est_net) ? ((r.est_net-r.forecast_net)/r.forecast_net*100) : null;
+    h += `<tr>
+      <td class="code">${r.code}</td>
+      <td class="name">${r.name}</td>
+      <td><span class="tag">${r.matched||''}</span></td>
+      <td>${fmt(r.single_net)}</td>
+      <td>${fmt(r.single_income)}</td>
+      <td>${pct(r.net_growth)}</td>
+      <td>${pct(r.income_growth)}</td>
+      <td>${fmt(r.forecast_net)}</td>
+      <td>${fmt(r.est_net)}</td>
+      <td>${over===null?'':pct(over)}</td>
+      <td>${fmt(r.market_cap,1)}</td>
+      <td>${r.dynamic_pe||''}</td>
+      <td>${(r.notice_date||'').slice(0,10)}</td>
+    </tr>`;
+  });
+  h += '</table>';
+  document.getElementById('result').innerHTML = h;
+}
+fetchData();
+</script>
+</body>
+</html>
