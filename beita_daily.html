@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>贝塔 · 直播数据日报</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;background:#0d1117;color:#e6edf3;padding:20px 16px;-webkit-font-smoothing:antialiased}
+.wrap{max-width:720px;margin:0 auto}
+h1{font-size:22px;font-weight:900}
+.sub{color:#8b949e;font-size:12.5px;margin:5px 0 18px}
+.latest{background:linear-gradient(135deg,#1e3a8a 0%,#1e293b 100%);border:1px solid #334155;border-radius:14px;padding:18px;margin-bottom:14px}
+.latest .date{font-size:12px;color:#93c5fd;font-weight:700}
+.latest .big{display:flex;gap:18px;margin-top:12px;flex-wrap:wrap}
+.latest .item{text-align:center;flex:1;min-width:70px}
+.latest .item .v{font-size:26px;font-weight:900}
+.latest .item .l{font-size:11px;color:#94a3b8;margin-top:3px}
+h2{font-size:15px;font-weight:800;margin:24px 0 10px;padding-left:9px;border-left:3px solid #f78166}
+.card{background:#161b22;border:1px solid #30363d;border-radius:12px;padding:15px 17px}
+.day{display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid #21262d;cursor:pointer}
+.day:last-child{border-bottom:none}
+.day .d{font-size:14px;font-weight:700}
+.day .info{font-size:11.5px;color:#8b949e;margin-top:3px}
+.day .score{font-size:18px;font-weight:900}
+.day .arrow{color:#6e7681;margin-left:10px}
+ul{margin:6px 0 0 18px;font-size:13px;line-height:1.9;color:#c9d1d9}
+li::marker{color:#f78166}
+.tag{display:inline-block;padding:2px 8px;border-radius:5px;font-size:11px;margin-right:5px}
+.tg{background:#1a3629;color:#6ee7a8}
+.tr{background:#3d1d1d;color:#fca5a5}
+.quote{background:#0d1117;border-left:3px solid #d29922;border-radius:6px;padding:10px 13px;margin:9px 0;font-size:12.5px;color:#c9d1d9;line-height:1.8}
+.foot{color:#484f58;font-size:11px;text-align:center;margin-top:28px;line-height:1.8}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>贝塔 · 直播数据日报</h1>
+  <div class="sub">每场播完自动更新 · 点开就能看</div>
+
+  <div class="latest">
+    <div class="date">最新一场 · 2026-10-31 晚场</div>
+    <div class="big">
+      <div class="item"><div class="v">104</div><div class="l">分钟</div></div>
+      <div class="item"><div class="v">190</div><div class="l">弹幕</div></div>
+      <div class="item"><div class="v" style="color:#fbbf24">7</div><div class="l">峰值在线</div></div>
+      <div class="item"><div class="v" style="color:#4ade80">72</div><div class="l">陪伴感</div></div>
+    </div>
+    <div style="margin-top:14px;font-size:12.5px;color:#cbd5e1;line-height:1.8">
+      这场聊透了：做饭 / 健身 / 旅行（新加坡、澳门）/ 钓鱼 / 感情 / 万圣节<br>
+      <b>你的内容中心不是做饭，是「陪人聊天」</b>——这是你的强项。
+    </div>
+  </div>
+
+  <h2>这场做得好的</h2>
+  <div class="card">
+    <ul>
+      <li><span class="tag tg">声音</span>“是个美女呀，声音还怪好听”</li>
+      <li><span class="tag tg">陪伴</span>104 分钟没冷透，老观众一直聊</li>
+      <li><span class="tag tg">京味儿</span>“北京大妞说话好听”——这是你的标签</li>
+      <li><span class="tag tg">有引导</span>你会说“点关注、加粉丝群”，很多主播根本不说</li>
+    </ul>
+  </div>
+
+  <h2>可以再往前一步</h2>
+  <div class="card">
+    <ul>
+      <li><span class="tag tr">开头10分钟</span>弹幕只有3条——开播最需要抓人</li>
+      <li><span class="tag tr">新观众破冰</span>“XX来了”主动点一句，人就留住了</li>
+      <li><span class="tag tr">引导时机</span>在聊得最热时说“点个关注”，比冷场时强3倍</li>
+    </ul>
+  </div>
+
+  <h2>一句话建议</h2>
+  <div class="card">
+    <div class="quote">
+      <b>加一个“壳”</b>：边收拾屋子 / 边泡茶 / 边拆快递 边聊。<br>
+      有动作，画面不空，你也不用硬想话题。
+    </div>
+  </div>
+
+  <h2>历史场次</h2>
+  <div class="card">
+    <div class="day">
+      <div>
+        <div class="d">2026-10-31 晚场</div>
+        <div class="info">104分钟 · 弹幕190条 · 峰值7人</div>
+      </div>
+      <div style="display:flex;align-items:center">
+        <span class="score" style="color:#fbbf24">72</span>
+        <span class="arrow">›</span>
+      </div>
+    </div>
+    <div style="padding:12px 0;text-align:center;color:#484f58;font-size:12px">
+      下一场播完，这里自动加一条
+    </div>
+  </div>
+
+  <div class="foot">
+    数据自动采集：录音 + 弹幕 + 截图<br>
+    谭文醒整理 · 2026-11-01
+  </div>
+</div>
+</body>
+</html>
