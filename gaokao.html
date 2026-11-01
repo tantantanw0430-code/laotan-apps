@@ -166,6 +166,8 @@ h1 .g{background:linear-gradient(135deg,#60a5fa,#a78bfa,#22d3ee);-webkit-backgro
     <div class="stat amber"><div class="v" id="stDays">0</div><div class="l">天数</div></div>
   </div>
 
+  <div id="continueBox" class="hide" style="background:linear-gradient(135deg,rgba(59,130,246,.14),rgba(139,92,246,.08));border:1px solid rgba(59,130,246,.35);border-radius:14px;padding:15px 17px;margin-bottom:4px;cursor:pointer"></div>
+
   <div class="sec">选择科目</div>
   <div class="subjs" id="subjList"></div>
 
@@ -274,8 +276,25 @@ async function loadIndex(){
     box.appendChild(d);
   });
   renderHomeStats();
+  renderContinue();
 }
 loadIndex();
+
+function renderContinue(){
+  const box = document.getElementById('continueBox');
+  if(!box) return;
+  const names = Object.keys(BANK).concat(Object.keys(JSON.parse(localStorage.getItem('dsh_stats')||'{}').kn||{}));
+  let found = null;
+  for(const n of ['数学','物理','化学','生物','英语']){
+    const p = LS.get('dsh_prog_'+n, null);
+    if(p && p.idx > 0 && p.idx < (p.list||[]).length){ found = {name:n, p:p}; break; }
+  }
+  if(!found){ box.classList.add('hide'); return; }
+  const pct = Math.round(found.p.idx/found.p.list.length*100);
+  box.classList.remove('hide');
+  box.innerHTML = `<div style="display:flex;align-items:center;justify-content:space-between"><div><div style="font-size:14px;font-weight:800">继续上次 · ${found.name}</div><div style="font-size:11.5px;color:var(--dim);margin-top:2px">做到第 ${found.p.idx} 题 / ${found.p.list.length}（${pct}%）</div></div><div style="font-size:22px;color:var(--blue)">›</div></div>`;
+  box.onclick = ()=>{ startSubject(found.name, found.name+'.json'); };
+}
 
 function renderHomeStats(){
   const s = getStats();
@@ -319,15 +338,45 @@ async function startSubject(name, file){
       BANK[name] = await r.json();
     }catch(e){ alert('题库加载失败，请检查网络'); return; }
   }
+
+  // 检查上次进度
+  const saved = LS.get('dsh_prog_'+name, null);
+  if(saved && saved.list && saved.idx > 0 && saved.idx < saved.list.length){
+    const pct = Math.round(saved.idx/saved.list.length*100);
+    const go = confirm(`上次「${name}」做到第 ${saved.idx} 题（${pct}%），要接着做吗？\n\n确定 = 继续上次\n取消 = 重新开始`);
+    if(go){
+      LIST = saved.list;
+      idx = saved.idx;
+      right = saved.right || 0;
+      wrongs = saved.wrongs || [];
+      document.getElementById('home').classList.add('hide');
+      document.getElementById('quiz').classList.remove('hide');
+      document.getElementById('quizTitle').textContent = name;
+      show();
+      return;
+    }
+  }
+
+  // 新的一轮
   LIST = BANK[name].slice();
   shuffle(LIST);
   if(LIST.length>30) LIST = LIST.slice(0,30);
   idx=0; right=0; wrongs=[];
+  saveProgress();
   document.getElementById('home').classList.add('hide');
   document.getElementById('quiz').classList.remove('hide');
   document.getElementById('quizTitle').textContent = name;
   document.getElementById('pbar').style.width='0%';
   show();
+}
+
+// 保存当前进度
+function saveProgress(){
+  if(!SUBJ || !LIST.length) return;
+  LS.set('dsh_prog_'+SUBJ, {list:LIST, idx:idx, right:right, wrongs:wrongs, t:Date.now()});
+}
+function clearProgress(){
+  if(SUBJ) LS.set('dsh_prog_'+SUBJ, null);
 }
 function shuffle(a){ for(let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; } }
 
@@ -372,6 +421,7 @@ function show(){
   exp.classList.add('hide'); exp.innerHTML='';
   document.getElementById('qbtns').innerHTML='<button class="btn bp" onclick="submit()">提交</button>';
   renderMath(body); renderMath(document.getElementById('qtext'));
+  saveProgress();
   window.scrollTo(0,0);
 }
 
@@ -408,6 +458,7 @@ function submit(){
   exp.innerHTML = `<div class="exp"><b class="${ok?'ok':'no'}">${ok?'✓ 答对了':'✗ 答错了'}</b>　正确答案：<b>${q.a}</b>${q.ex?('<br>'+escKeepImg(q.ex)):''}</div>`;
   exp.classList.remove('hide');
   renderMath(exp);
+  saveProgress();
   document.getElementById('qbtns').innerHTML =
     `<button class="btn bp" onclick="next()">${idx>=LIST.length-1?'看成绩':'下一题'}</button>`;
 }
@@ -463,6 +514,7 @@ function finish(){
     }
   });
   saveWrongBook(wb);
+  clearProgress();
   window.scrollTo(0,0);
 }
 
