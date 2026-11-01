@@ -2,17 +2,17 @@
  "subjects": [
   {
    "name": "数学",
-   "count": 411,
+   "count": 326,
    "file": "数学.json"
   },
   {
    "name": "物理",
-   "count": 39,
+   "count": 28,
    "file": "物理.json"
   },
   {
    "name": "化学",
-   "count": 102,
+   "count": 76,
    "file": "化学.json"
   },
   {
@@ -26,6 +26,6 @@
    "file": "英语.json"
   }
  ],
- "total": 812,
+ "total": 690,
  "updated": "2026-11-01"
 }
