@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>小林 · 视频号运营诊断</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;background:#f8fafc;color:#1f2937;padding:20px 16px;line-height:1.8;-webkit-font-smoothing:antialiased}
+.wrap{max-width:760px;margin:0 auto}
+h1{font-size:23px;font-weight:900;letter-spacing:-.5px}
+.sub{color:#64748b;font-size:13px;margin:6px 0 22px}
+h2{font-size:17px;font-weight:900;margin:30px 0 10px}
+h2 .n{display:inline-block;width:26px;height:26px;line-height:26px;text-align:center;background:#b45309;color:#fff;border-radius:7px;font-size:14px;margin-right:9px}
+.card{background:#fff;border:1px solid #e2e8f0;border-radius:12px;padding:16px 18px;margin-bottom:12px}
+.card.hi{border:2px solid #b45309;background:#fffbeb}
+.quote{background:#fff;border-left:4px solid #f59e0b;border-radius:0 8px 8px 0;padding:12px 15px;margin:10px 0;font-size:14px;color:#334155;box-shadow:0 1px 2px rgba(0,0,0,.04)}
+.quote b{color:#b45309}
+table{width:100%;border-collapse:collapse;font-size:13.5px;margin:8px 0}
+th{background:#f1f5f9;color:#475569;text-align:left;padding:9px 7px;font-weight:700;font-size:12.5px}
+td{padding:9px 7px;border-bottom:1px solid #f1f5f9;vertical-align:top;color:#334155}
+.good{color:#16a34a;font-weight:700}
+.bad{color:#dc2626;font-weight:700}
+.mid{color:#d97706;font-weight:700}
+.rank{display:flex;gap:10px;align-items:center;padding:9px 0;border-bottom:1px solid #f1f5f9;font-size:13.5px}
+.rank:last-child{border:none}
+.rank .p{font-size:15px;font-weight:900;color:#b45309;width:70px;flex-shrink:0}
+.rank .t{color:#334155}
+.rank .tag{font-size:10.5px;padding:1px 7px;border-radius:4px;background:#e0f2fe;color:#0369a1;margin-left:6px;flex-shrink:0}
+ul.steps{margin:6px 0 0 18px;font-size:14px;line-height:1.9;color:#334155}
+ul.steps li{margin:6px 0}
+ul.steps li::marker{color:#b45309}
+.divider{height:1px;background:#e2e8f0;margin:26px 0}
+.day{background:#fff;border:1px solid #e2e8f0;border-radius:10px;padding:14px 16px;margin:9px 0}
+.day .d{font-size:13px;font-weight:800;color:#b45309;margin-bottom:5px}
+.day .c{font-size:13.5px;color:#334155;line-height:1.85}
+.foot{color:#94a3b8;font-size:11.5px;text-align:center;margin-top:32px;line-height:1.9}
+.note{font-size:12px;color:#94a3b8;margin-top:8px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>小林 · 视频号运营诊断</h1>
+  <div class="sub">账号：奥迪专修小林（sphDi4kzMgeHaKW）· 视频 104 条 / 粉丝 221 · 2026-11-14</div>
+
+  <div class="card hi">
+    <div style="font-size:16px;font-weight:900;margin-bottom:8px">先说结论</div>
+    <div style="font-size:14.5px;line-height:1.9;color:#334155">
+      <b>你的号，火的不是“奥迪专修”，是“人”和“意外”。</b><br><br>
+      两条爆款：<b>“新收学徒一名”2.5万</b>、<b>“发现一只小猫咪”1.2万</b>。<br>
+      第三条直接掉到 3488，<b>差 7 倍</b>。<br><br>
+      而你花钱做的 <b>AI 数字人视频，4 条平均只有 1000 出头</b>——最差的一类。
+    </div>
+  </div>
+
+  <h2><span class="n">1</span>数据（最近 19 条，真实抓取）</h2>
+  <div class="card">
+    <div style="font-size:12.5px;color:#94a3b8;margin-bottom:8px">只抓到最近 19 条（后台分页，剩余 85 条暂时取不到）。以下数字全部来自后台，无推算。</div>
+    <table>
+      <tr><th>排名</th><th>播放</th><th>标题</th><th>类型</th></tr>
+      <tr><td>1</td><td class="good">2.5万</td><td>新收学徒一名</td><td><b>人 + 事件</b></td></tr>
+      <tr><td>2</td><td class="good">1.2万</td><td>发现一只小猫咪</td><td><b>意外/萌宠</b></td></tr>
+      <tr><td>3</td><td>3488</td><td>我是个正经人</td><td>段子</td></tr>
+      <tr><td>4</td><td>3257</td><td>我又被富婆保养了</td><td>段子/双关</td></tr>
+      <tr><td>5</td><td>3097</td><td>烟台奥迪专修</td><td>纯业务</td></tr>
+      <tr><td>6</td><td>3026</td><td>Ai数字人帮我拍视频</td><td>AI</td></tr>
+      <tr><td>...</td><td>...</td><td>...</td><td>...</td></tr>
+      <tr><td>18</td><td class="bad">339</td><td>Ai数字人帮我拍视频</td><td>AI</td></tr>
+      <tr><td>19</td><td class="bad">323</td><td>奥杰德系专修俱乐部</td><td>纯业务</td></tr>
+    </table>
+  </div>
+
+  <h2><span class="n">2</span>哪种内容能火（分类统计）</h2>
+  <div class="card">
+    <table>
+      <tr><th>类型</th><th>条数</th><th>平均播放</th><th>判断</th></tr>
+      <tr><td><b>人/故事</b>（学徒）</td><td>1</td><td class="good">2.5万</td><td class="good">🥇 最强的</td></tr>
+      <tr><td><b>意外/萌宠</b>（猫咪）</td><td>1</td><td class="good">1.2万</td><td class="good">🥈 强</td></tr>
+      <tr><td>段子（富婆/正经人）</td><td>3</td><td class="mid">3000 左右</td><td class="mid">中</td></tr>
+      <tr><td>纯业务（专修/俱乐部）</td><td>4</td><td class="bad">600-3000</td><td class="bad">弱</td></tr>
+      <tr><td><b>AI 数字人</b></td><td>4</td><td class="bad">约 1000</td><td class="bad">❌ 最差</td></tr>
+    </table>
+    <div class="quote">
+      <b>结论：观众不看你“多专业”，看你“这个人”和“发生了什么”。</b>
+    </div>
+  </div>
+
+  <h2><span class="n">3</span>问题出在哪（三条）</h2>
+  <div class="card">
+    <ul class="steps">
+      <li><b>AI 数字人在浪费钱。</b>4 条平均 1000 播放，是最差的一类。观众一眼看出“不是真人”，划走。</li>
+      <li><b>内容太“业务向”。</b>“奥迪专修”“认准小林哥”这种，播放 300-3000。客户不爱看广告，爱看人。</li>
+      <li><b>爆款不可复制。</b>学徒、猫咪是“碰巧”火的，后面没有接着拍同类，热度浪费了。</li>
+    </ul>
+  </div>
+
+  <h2><span class="n">4</span>怎么改（具体动作）</h2>
+
+  <div class="card hi">
+    <div style="font-size:15px;font-weight:900;margin-bottom:8px">核心一句话：<br>从“拍业务”改成“拍人”</div>
+    <div style="font-size:14px;color:#334155;line-height:1.9">
+      你的号不是“奥迪专修教学号”，应该是<b>“一个修奥迪的人，他的日常”</b>。
+    </div>
+  </div>
+
+  <div class="card">
+    <div style="font-size:15px;font-weight:800;margin-bottom:8px">① 马上停掉 AI 数字人</div>
+    <div style="font-size:14px;color:#334155">
+      数据已经证明最差。<b>真人出镜</b>，哪怕拍得糙，都比 AI 强。
+    </div>
+  </div>
+
+  <div class="card">
+    <div style="font-size:15px;font-weight:800;margin-bottom:8px">② 接着拍“人”（学徒系列继续）</div>
+    <div style="font-size:14px;color:#334155">
+      “新收学徒一名”2.5 万，<b>这是你最强的内容</b>。<br>
+      接着拍：<b>学徒第 2 天、学徒第一次独立修车、学徒犯错被骂、学徒上手了</b>。
+    </div>
+    <div class="quote" style="margin-top:8px">
+      <b>为什么有效：</b>观众追的是“成长故事”，不是修车知识。
+    </div>
+  </div>
+
+  <div class="card">
+    <div style="font-size:15px;font-weight:800;margin-bottom:8px">③ 拍“车间里的意外”</div>
+    <div style="font-size:14px;color:#334155">
+      猫咪 1.2 万，说明<b>意外内容有流量</b>。<br>
+      车间里天天有事：<b>客户送来的奇葩车、拆开发现的问题、员工之间的玩笑、猫狗乱入</b>。
+    </div>
+  </div>
+
+  <div class="card">
+    <div style="font-size:15px;font-weight:800;margin-bottom:8px">④ 拍“客户”</div>
+    <div style="font-size:14px;color:#334155">
+      客户提车、客户感谢、客户吐槽、客户砍价。<br>
+      <b>真人真事，比任何文案都强。</b>
+    </div>
+  </div>
+
+  <div class="card">
+    <div style="font-size:15px;font-weight:800;margin-bottom:8px">⑤ 标题改“说人话”</div>
+    <table style="margin-top:6px">
+      <tr><th>现在</th><th>改成</th></tr>
+      <tr><td>烟台奥迪专修</td><td><b>今天来了台车，车主说修了三次没好</b></td></tr>
+      <tr><td>奥迪专修，我们最专业</td><td><b>这台车我修了 6 小时，就为一个异响</b></td></tr>
+      <tr><td>Ai数字人帮我拍视频</td><td><b>（删掉，别再拍AI）</b></td></tr>
+      <tr><td>奥杰德系专修俱乐部</td><td><b>我这店里，来了个 20 年的老技师</b></td></tr>
+    </table>
+  </div>
+
+  <h2><span class="n">5</span>这周怎么干（执行表）</h2>
+  <div class="card">
+    <div class="day">
+      <div class="d">周一</div>
+      <div class="c"><b>学徒第 2 天</b>（接着 2.5 万那条的热度）</div>
+    </div>
+    <div class="day">
+      <div class="d">周二</div>
+      <div class="c"><b>一台难修的车</b>（拍过程，不拍结论）</div>
+    </div>
+    <div class="day">
+      <div class="d">周三</div>
+      <div class="c"><b>车间里的意外</b>（猫、狗、奇葩车、员工玩笑）</div>
+    </div>
+    <div class="day">
+      <div class="d">周四</div>
+      <div class="c"><b>客户提车</b>（真人真事，不用摆拍）</div>
+    </div>
+    <div class="day">
+      <div class="d">周五</div>
+      <div class="c"><b>学徒犯错</b>（真实，别怕丢人）</div>
+    </div>
+    <div class="day">
+      <div class="d">周末</div>
+      <div class="c"><b>复盘</b>：哪条播放高，下周多拍那个方向</div>
+    </div>
+  </div>
+
+  <h2><span class="n">6</span>什么时候能看到效果</h2>
+  <div class="card">
+    <table>
+      <tr><th>时间</th><th>预期</th></tr>
+      <tr><td>第 1 周</td><td>先跑通“拍人”的方向，播放不一定涨</td></tr>
+      <tr><td>第 2-3 周</td><td>如果有一条爆了（比如学徒系列），播放会明显上升</td></tr>
+      <tr><td>第 4 周</td><td>能看出“哪类内容稳”，固定下来</td></tr>
+    </table>
+    <div class="quote" style="border-left-color:#dc2626;background:#fef2f2">
+      <b>说清楚：</b>没人能保证“一定爆”。<b>但“拍人”比“拍AI”“拍业务”的命中率高</b>——这是你号上 19 条数据证明的。
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="card" style="background:#0f172a;color:#fff;border:none">
+    <div style="font-size:15px;font-weight:900;margin-bottom:8px">最后一句话</div>
+    <div style="font-size:14px;color:#cbd5e1;line-height:1.9">
+      你店里最好的内容，不是“奥迪专修”，是<b style="color:#fbbf24">“你、你的学徒、你的客户、你店里发生的事”</b>。<br><br>
+      把这些拍出来，比任何 AI 数字人都强。
+    </div>
+  </div>
+
+  <div class="foot">
+    数据来源：视频号助手后台（2026-11-14 抓取，最近 19 条）<br>
+    剩余 85 条因后台分页暂时取不到，已如实说明<br>
+    谭文醒整理 · 2026-11-14
+  </div>
+</div>
+</body>
+</html>
