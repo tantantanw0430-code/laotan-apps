@@ -1,5 +1,5 @@
 {
-  "update_time": "2026-11-13 19:03:45",
+  "update_time": "2026-11-14 19:03:55",
   "total_stocks": 5579,
   "result_count": 374,
   "results": [
@@ -13,7 +13,7 @@
       "income_growth": 8.06,
       "market_cap": 31542.0,
       "dynamic_pe": 7.78,
-      "forecast_net": 3745.24,
+      "forecast_net": 3753.23,
       "est_net": 4053.19,
       "notice_date": "2026-10-31"
     },
@@ -293,7 +293,7 @@
       "income_growth": 24.8,
       "market_cap": 2131.5,
       "dynamic_pe": 9.23,
-      "forecast_net": 200.52,
+      "forecast_net": 201.31,
       "est_net": 230.97,
       "notice_date": "2026-10-27"
     },
@@ -517,7 +517,7 @@
       "income_growth": 38.81,
       "market_cap": 786.6,
       "dynamic_pe": 5.29,
-      "forecast_net": 112.43,
+      "forecast_net": 113.15,
       "est_net": 148.72,
       "notice_date": "2026-10-17"
     },
@@ -545,7 +545,7 @@
       "income_growth": 90.02,
       "market_cap": 1590.1,
       "dynamic_pe": 15.95,
-      "forecast_net": 72.53,
+      "forecast_net": 72.97,
       "est_net": 99.68,
       "notice_date": "2026-10-28"
     },
@@ -559,7 +559,7 @@
       "income_growth": 40.83,
       "market_cap": 502.6,
       "dynamic_pe": 4.17,
-      "forecast_net": 81.66,
+      "forecast_net": 81.63,
       "est_net": 120.49,
       "notice_date": "2026-10-31"
     },
@@ -573,7 +573,7 @@
       "income_growth": 20.94,
       "market_cap": 630.1,
       "dynamic_pe": 7.1,
-      "forecast_net": 80.53,
+      "forecast_net": 81.36,
       "est_net": 88.69,
       "notice_date": "2026-10-22"
     },
@@ -783,7 +783,7 @@
       "income_growth": 711.4,
       "market_cap": 1091.1,
       "dynamic_pe": 17.51,
-      "forecast_net": 26.06,
+      "forecast_net": 27.33,
       "est_net": 62.31,
       "notice_date": "2026-10-30"
     },
@@ -951,7 +951,7 @@
       "income_growth": 27.6,
       "market_cap": 433.7,
       "dynamic_pe": 9.98,
-      "forecast_net": 39.42,
+      "forecast_net": 39.37,
       "est_net": 43.47,
       "notice_date": "2026-10-27"
     },
@@ -979,7 +979,7 @@
       "income_growth": 131.58,
       "market_cap": 540.6,
       "dynamic_pe": 5.82,
-      "forecast_net": 57.15,
+      "forecast_net": 56.38,
       "est_net": 92.84,
       "notice_date": "2026-10-30"
     },
@@ -1119,7 +1119,7 @@
       "income_growth": 1.44,
       "market_cap": 601.6,
       "dynamic_pe": 15.5,
-      "forecast_net": 38.01,
+      "forecast_net": 37.28,
       "est_net": 38.82,
       "notice_date": "2026-10-28"
     },
@@ -1721,7 +1721,7 @@
       "income_growth": 36.85,
       "market_cap": 206.8,
       "dynamic_pe": 9.08,
-      "forecast_net": 11.27,
+      "forecast_net": 11.1,
       "est_net": 22.76,
       "notice_date": "2026-10-30"
     },
@@ -1763,7 +1763,7 @@
       "income_growth": 23.3,
       "market_cap": 163.9,
       "dynamic_pe": 7.17,
-      "forecast_net": 15.59,
+      "forecast_net": 15.9,
       "est_net": 22.86,
       "notice_date": "2026-10-29"
     },
@@ -1847,7 +1847,7 @@
       "income_growth": 5.87,
       "market_cap": 109.6,
       "dynamic_pe": 13.44,
-      "forecast_net": 7.61,
+      "forecast_net": 7.79,
       "est_net": 8.16,
       "notice_date": "2026-10-28"
     },
@@ -2099,7 +2099,7 @@
       "income_growth": 2.57,
       "market_cap": 127.3,
       "dynamic_pe": 9.43,
-      "forecast_net": 12.53,
+      "forecast_net": 12.06,
       "est_net": 13.51,
       "notice_date": "2026-10-31"
     },
@@ -2925,7 +2925,7 @@
       "income_growth": 99.08,
       "market_cap": 134.4,
       "dynamic_pe": 5.4,
-      "forecast_net": 9.36,
+      "forecast_net": 9.33,
       "est_net": 24.89,
       "notice_date": "2026-10-29"
     },
@@ -2981,7 +2981,7 @@
       "income_growth": 52.27,
       "market_cap": 35.5,
       "dynamic_pe": 2.65,
-      "forecast_net": 3.01,
+      "forecast_net": 3.47,
       "est_net": 13.4,
       "notice_date": "2026-10-30"
     },
@@ -4255,7 +4255,7 @@
       "income_growth": 155.62,
       "market_cap": 84.5,
       "dynamic_pe": 7.94,
-      "forecast_net": 0.54,
+      "forecast_net": 1.02,
       "est_net": 2.79,
       "notice_date": "2026-10-29"
     },
@@ -4787,7 +4787,7 @@
       "income_growth": 19.9,
       "market_cap": 70.7,
       "dynamic_pe": 7.65,
-      "forecast_net": 2.45,
+      "forecast_net": 2.37,
       "est_net": 9.24,
       "notice_date": "2026-10-31"
     },
