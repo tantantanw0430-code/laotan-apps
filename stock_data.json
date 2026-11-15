@@ -1,7 +1,7 @@
 {
-  "update_time": "2026-11-14 19:03:55",
+  "update_time": "2026-11-15 19:04:00",
   "total_stocks": 5579,
-  "result_count": 374,
+  "result_count": 373,
   "results": [
     {
       "code": "601398",
@@ -279,7 +279,7 @@
       "income_growth": 15.78,
       "market_cap": 1583.8,
       "dynamic_pe": 6.74,
-      "forecast_net": 230.83,
+      "forecast_net": 230.55,
       "est_net": 234.87,
       "notice_date": "2026-10-29"
     },
@@ -405,7 +405,7 @@
       "income_growth": 16.99,
       "market_cap": 2359.8,
       "dynamic_pe": 17.76,
-      "forecast_net": 108.93,
+      "forecast_net": 109.15,
       "est_net": 132.89,
       "notice_date": "2026-10-29"
     },
@@ -797,7 +797,7 @@
       "income_growth": 164.85,
       "market_cap": 561.0,
       "dynamic_pe": 5.53,
-      "forecast_net": 35.24,
+      "forecast_net": 37.97,
       "est_net": 101.41,
       "notice_date": "2026-10-28"
     },
@@ -811,7 +811,7 @@
       "income_growth": 6.98,
       "market_cap": 637.7,
       "dynamic_pe": 11.76,
-      "forecast_net": 49.77,
+      "forecast_net": 49.89,
       "est_net": 54.23,
       "notice_date": "2026-10-30"
     },
@@ -839,7 +839,7 @@
       "income_growth": 155.19,
       "market_cap": 388.3,
       "dynamic_pe": 7.66,
-      "forecast_net": 49.83,
+      "forecast_net": 50.52,
       "est_net": 50.68,
       "notice_date": "2026-10-29"
     },
@@ -1511,7 +1511,7 @@
       "income_growth": 34.89,
       "market_cap": 337.3,
       "dynamic_pe": 17.34,
-      "forecast_net": 16.76,
+      "forecast_net": 16.85,
       "est_net": 19.45,
       "notice_date": "2026-10-20"
     },
@@ -2141,7 +2141,7 @@
       "income_growth": 28.38,
       "market_cap": 185.2,
       "dynamic_pe": 14.01,
-      "forecast_net": 12.84,
+      "forecast_net": 12.5,
       "est_net": 13.22,
       "notice_date": "2026-10-26"
     },
@@ -2197,7 +2197,7 @@
       "income_growth": 26.26,
       "market_cap": 169.0,
       "dynamic_pe": 7.74,
-      "forecast_net": 2.37,
+      "forecast_net": 2.21,
       "est_net": 21.84,
       "notice_date": "2026-10-31"
     },
@@ -2449,7 +2449,7 @@
       "income_growth": 38.76,
       "market_cap": 438.4,
       "dynamic_pe": 7.48,
-      "forecast_net": 2.21,
+      "forecast_net": 2.54,
       "est_net": 10.97,
       "notice_date": "2026-10-31"
     },
@@ -3037,7 +3037,7 @@
       "income_growth": 42.91,
       "market_cap": 121.2,
       "dynamic_pe": 18.6,
-      "forecast_net": 6.29,
+      "forecast_net": 5.9,
       "est_net": 6.52,
       "notice_date": "2026-10-27"
     },
@@ -3670,20 +3670,6 @@
       "forecast_net": 4.35,
       "est_net": 17.27,
       "notice_date": "2026-10-29"
-    },
-    {
-      "code": "000957",
-      "name": "中通客车",
-      "matched": "条件1",
-      "single_net": 1.2,
-      "single_income": 19.23,
-      "net_growth": 38.43,
-      "income_growth": 12.18,
-      "market_cap": 54.8,
-      "dynamic_pe": 11.02,
-      "forecast_net": 4.92,
-      "est_net": 4.98,
-      "notice_date": "2026-10-28"
     },
     {
       "code": "603408",
@@ -5025,7 +5011,7 @@
       "income_growth": 13.08,
       "market_cap": 91.3,
       "dynamic_pe": 0.38,
-      "forecast_net": 2.45,
+      "forecast_net": 2.34,
       "est_net": 239.96,
       "notice_date": "2026-10-31"
     },
@@ -5039,7 +5025,7 @@
       "income_growth": 16.84,
       "market_cap": 53.2,
       "dynamic_pe": 14.2,
-      "forecast_net": 1.65,
+      "forecast_net": 1.77,
       "est_net": 3.74,
       "notice_date": "2026-10-27"
     },
