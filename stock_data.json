@@ -1,5 +1,5 @@
 {
-  "update_time": "2026-11-20 19:04:27",
+  "update_time": "2026-11-21 19:04:14",
   "total_stocks": 5580,
   "result_count": 401,
   "results": [
@@ -587,7 +587,7 @@
       "income_growth": 73.46,
       "market_cap": 957.0,
       "dynamic_pe": 9.56,
-      "forecast_net": 83.92,
+      "forecast_net": 84.39,
       "est_net": 100.15,
       "notice_date": "2026-10-17"
     },
@@ -783,7 +783,7 @@
       "income_growth": 12.21,
       "market_cap": 452.4,
       "dynamic_pe": 7.89,
-      "forecast_net": 57.22,
+      "forecast_net": 57.18,
       "est_net": 57.36,
       "notice_date": "2026-10-29"
     },
@@ -1119,7 +1119,7 @@
       "income_growth": 49.9,
       "market_cap": 489.4,
       "dynamic_pe": 12.63,
-      "forecast_net": 24.65,
+      "forecast_net": 24.72,
       "est_net": 38.75,
       "notice_date": "2026-10-21"
     },
@@ -1161,7 +1161,7 @@
       "income_growth": 0.63,
       "market_cap": 1026.7,
       "dynamic_pe": 18.41,
-      "forecast_net": -11.05,
+      "forecast_net": -11.23,
       "est_net": 37.29,
       "notice_date": "2026-10-31"
     },
@@ -1525,7 +1525,7 @@
       "income_growth": 46.41,
       "market_cap": 464.1,
       "dynamic_pe": 8.13,
-      "forecast_net": 44.3,
+      "forecast_net": 44.14,
       "est_net": 57.06,
       "notice_date": "2026-10-30"
     },
@@ -1763,7 +1763,7 @@
       "income_growth": 36.85,
       "market_cap": 171.7,
       "dynamic_pe": 7.54,
-      "forecast_net": 10.49,
+      "forecast_net": 10.38,
       "est_net": 22.76,
       "notice_date": "2026-10-30"
     },
@@ -1917,7 +1917,7 @@
       "income_growth": 16.39,
       "market_cap": 240.4,
       "dynamic_pe": 16.6,
-      "forecast_net": 12.48,
+      "forecast_net": 12.58,
       "est_net": 14.48,
       "notice_date": "2026-10-29"
     },
@@ -2113,7 +2113,7 @@
       "income_growth": 10.76,
       "market_cap": 219.1,
       "dynamic_pe": 16.91,
-      "forecast_net": 11.21,
+      "forecast_net": 11.18,
       "est_net": 12.96,
       "notice_date": "2026-10-27"
     },
@@ -2398,20 +2398,6 @@
       "notice_date": "2026-10-30"
     },
     {
-      "code": "300623",
-      "name": "捷捷微电",
-      "matched": "条件1",
-      "single_net": 2.95,
-      "single_income": 13.66,
-      "net_growth": 194.44,
-      "income_growth": 51.55,
-      "market_cap": 202.6,
-      "dynamic_pe": 14.43,
-      "forecast_net": 9.02,
-      "est_net": 14.04,
-      "notice_date": "2026-10-23"
-    },
-    {
       "code": "002423",
       "name": "中粮资本",
       "matched": "条件2",
@@ -2424,6 +2410,20 @@
       "forecast_net": 12.21,
       "est_net": 18.78,
       "notice_date": "2026-10-30"
+    },
+    {
+      "code": "300623",
+      "name": "捷捷微电",
+      "matched": "条件1",
+      "single_net": 2.95,
+      "single_income": 13.66,
+      "net_growth": 194.44,
+      "income_growth": 51.55,
+      "market_cap": 202.6,
+      "dynamic_pe": 14.43,
+      "forecast_net": 9.02,
+      "est_net": 14.04,
+      "notice_date": "2026-10-23"
     },
     {
       "code": "002083",
@@ -2587,7 +2587,7 @@
       "single_income": 82.65,
       "net_growth": 14.74,
       "income_growth": 9.05,
-      "market_cap": 159.1,
+      "market_cap": 159.2,
       "dynamic_pe": 8.62,
       "forecast_net": 17.03,
       "est_net": 18.46,
@@ -3182,6 +3182,20 @@
       "notice_date": "2026-10-28"
     },
     {
+      "code": "688516",
+      "name": "奥特维",
+      "matched": "条件1",
+      "single_net": 1.66,
+      "single_income": 15.32,
+      "net_growth": 101.35,
+      "income_growth": 18.52,
+      "market_cap": 100.4,
+      "dynamic_pe": 11.21,
+      "forecast_net": 6.22,
+      "est_net": 8.95,
+      "notice_date": "2026-10-27"
+    },
+    {
       "code": "600395",
       "name": "盘江股份",
       "matched": "条件1",
@@ -3194,20 +3208,6 @@
       "forecast_net": 4.94,
       "est_net": 51.11,
       "notice_date": "2026-10-28"
-    },
-    {
-      "code": "688516",
-      "name": "奥特维",
-      "matched": "条件1",
-      "single_net": 1.66,
-      "single_income": 15.32,
-      "net_growth": 101.35,
-      "income_growth": 18.52,
-      "market_cap": 100.4,
-      "dynamic_pe": 11.21,
-      "forecast_net": 6.16,
-      "est_net": 8.95,
-      "notice_date": "2026-10-27"
     },
     {
       "code": "601098",
@@ -3233,7 +3233,7 @@
       "income_growth": 160.77,
       "market_cap": 145.8,
       "dynamic_pe": 18.81,
-      "forecast_net": 2.39,
+      "forecast_net": 2.68,
       "est_net": 7.75,
       "notice_date": "2026-10-23"
     },
@@ -3289,7 +3289,7 @@
       "income_growth": 187.6,
       "market_cap": 109.3,
       "dynamic_pe": 16.4,
-      "forecast_net": 3.46,
+      "forecast_net": 3.44,
       "est_net": 6.66,
       "notice_date": "2026-10-23"
     },
@@ -3317,7 +3317,7 @@
       "income_growth": 20.46,
       "market_cap": 158.7,
       "dynamic_pe": 25.46,
-      "forecast_net": 5.63,
+      "forecast_net": 5.62,
       "est_net": 6.23,
       "notice_date": "2026-10-30"
     },
@@ -4129,7 +4129,7 @@
       "income_growth": 25.9,
       "market_cap": 203.4,
       "dynamic_pe": 11.92,
-      "forecast_net": 3.13,
+      "forecast_net": 2.99,
       "est_net": 3.61,
       "notice_date": "2026-10-24"
     },
