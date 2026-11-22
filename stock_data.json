@@ -1,7 +1,7 @@
 {
-  "update_time": "2026-11-21 19:04:14",
+  "update_time": "2026-11-22 19:04:08",
   "total_stocks": 5580,
-  "result_count": 401,
+  "result_count": 400,
   "results": [
     {
       "code": "601398",
@@ -368,20 +368,6 @@
       "notice_date": "2026-10-30"
     },
     {
-      "code": "000807",
-      "name": "云铝股份",
-      "matched": "条件1",
-      "single_net": 39.28,
-      "single_income": 176.35,
-      "net_growth": 140.92,
-      "income_growth": 17.62,
-      "market_cap": 728.6,
-      "dynamic_pe": 5.0,
-      "forecast_net": 145.81,
-      "est_net": 145.87,
-      "notice_date": "2026-10-30"
-    },
-    {
       "code": "688192",
       "name": "迪哲医药",
       "matched": "条件1",
@@ -447,7 +433,7 @@
       "income_growth": 139.42,
       "market_cap": 1688.1,
       "dynamic_pe": 11.27,
-      "forecast_net": 75.53,
+      "forecast_net": 76.37,
       "est_net": 149.85,
       "notice_date": "2026-10-31"
     },
@@ -2398,20 +2384,6 @@
       "notice_date": "2026-10-30"
     },
     {
-      "code": "002423",
-      "name": "中粮资本",
-      "matched": "条件2",
-      "single_net": 2.95,
-      "single_income": 24.48,
-      "net_growth": 65.82,
-      "income_growth": 7.59,
-      "market_cap": 201.8,
-      "dynamic_pe": 10.75,
-      "forecast_net": 12.21,
-      "est_net": 18.78,
-      "notice_date": "2026-10-30"
-    },
-    {
       "code": "300623",
       "name": "捷捷微电",
       "matched": "条件1",
@@ -2424,6 +2396,20 @@
       "forecast_net": 9.02,
       "est_net": 14.04,
       "notice_date": "2026-10-23"
+    },
+    {
+      "code": "002423",
+      "name": "中粮资本",
+      "matched": "条件2",
+      "single_net": 2.95,
+      "single_income": 24.48,
+      "net_growth": 65.82,
+      "income_growth": 7.59,
+      "market_cap": 201.8,
+      "dynamic_pe": 10.75,
+      "forecast_net": 12.21,
+      "est_net": 18.78,
+      "notice_date": "2026-10-30"
     },
     {
       "code": "002083",
@@ -3023,7 +3009,7 @@
       "income_growth": 99.08,
       "market_cap": 117.5,
       "dynamic_pe": 4.72,
-      "forecast_net": 9.33,
+      "forecast_net": 9.06,
       "est_net": 24.89,
       "notice_date": "2026-10-29"
     },
@@ -4115,7 +4101,7 @@
       "income_growth": 16.58,
       "market_cap": 88.7,
       "dynamic_pe": 21.25,
-      "forecast_net": 3.21,
+      "forecast_net": 3.19,
       "est_net": 4.17,
       "notice_date": "2026-10-24"
     },
@@ -4465,7 +4451,7 @@
       "income_growth": 15.45,
       "market_cap": 40.1,
       "dynamic_pe": 8.1,
-      "forecast_net": 3.62,
+      "forecast_net": 3.27,
       "est_net": 4.95,
       "notice_date": "2026-10-29"
     },
