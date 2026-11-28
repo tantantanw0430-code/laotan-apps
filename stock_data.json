@@ -1,5 +1,5 @@
 {
-  "update_time": "2026-11-27 19:04:02",
+  "update_time": "2026-11-28 19:04:04",
   "total_stocks": 5581,
   "result_count": 381,
   "results": [
@@ -195,7 +195,7 @@
       "income_growth": 13.59,
       "market_cap": 6940.9,
       "dynamic_pe": 16.61,
-      "forecast_net": 371.08,
+      "forecast_net": 370.82,
       "est_net": 417.8,
       "notice_date": "2026-10-30"
     },
@@ -3387,7 +3387,7 @@
       "income_growth": 100.69,
       "market_cap": 104.3,
       "dynamic_pe": 14.52,
-      "forecast_net": 4.49,
+      "forecast_net": 4.52,
       "est_net": 7.18,
       "notice_date": "2026-10-20"
     },
@@ -3485,7 +3485,7 @@
       "income_growth": 27.33,
       "market_cap": 72.7,
       "dynamic_pe": 11.66,
-      "forecast_net": 5.16,
+      "forecast_net": 4.92,
       "est_net": 6.24,
       "notice_date": "2026-10-28"
     },
@@ -4927,7 +4927,7 @@
       "income_growth": 74.87,
       "market_cap": 18.7,
       "dynamic_pe": 4.6,
-      "forecast_net": 2.02,
+      "forecast_net": 1.52,
       "est_net": 4.06,
       "notice_date": "2026-10-29"
     },
